@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import config from './config';
-import './_dev_/run'
+import './dev/run'
 
 const game = new Phaser.Game(config);
 

@@ -1,3 +1,4 @@
+import { IAbsolutePosition } from '~src/base/interfaces/information';
 import { Mech } from '~src/base/mech';
 
 export const doMechCommand = (mech: Mech) => {
@@ -18,6 +19,13 @@ export const doMechCommand = (mech: Mech) => {
       friend: [],
       empty: [],
     },
-    { move: () => {}, attach: () => {} },
+    {
+      move: (position: IAbsolutePosition) => {
+        mech.actionSequence.moveTarget = position;
+      },
+      attach: (position: IAbsolutePosition) => {
+        
+      },
+    },
   );
 };

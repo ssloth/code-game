@@ -22,8 +22,14 @@ export interface IMechState {
   position: IAbsolutePosition;
 }
 
+export interface IActionSequence {
+  moveTarget?: IAbsolutePosition;
+}
+
 export interface IMech {
   model: IMechModel;
   chip: IChip;
   state: IMechState;
+  actionSequence: IActionSequence;
+  sprite: Phaser.GameObjects.Sprite;
 }
