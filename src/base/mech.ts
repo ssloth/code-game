@@ -1,9 +1,10 @@
 import { Concealment } from './interfaces/base';
+import { IChip } from './interfaces/chip';
 import { ICartesianCoordinate } from './interfaces/information';
 import { IMech, IMechModel, IMechState } from './interfaces/mech';
 
 export class Mech implements IMech {
-  constructor(public model: IMechModel, public state: IMechState) {}
+  constructor(public model: IMechModel, public chip: IChip, public state: IMechState) {}
 }
 
 export class MechModel implements IMechModel {

@@ -10,7 +10,7 @@ export interface IPolarCoordinates {
 }
 
 export type IAbsolutePosition = ICartesianCoordinate;
-export type IRelativePosition = ICartesianCoordinate;
+export type IRelativePosition = IPolarCoordinates;
 export type ICommonPosition = IAbsolutePosition | IRelativePosition;
 
 export interface IPosition {
@@ -30,7 +30,7 @@ export interface IEmptyInformation {
   position: IPosition;
 }
 
-export interface BaeInformation {
+export interface IBaeInformation {
   self: ISelfInformation;
   friend: IFriendInformation[];
   empty: IEmptyInformation[];

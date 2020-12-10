@@ -1,4 +1,5 @@
 import { IBase, ICanAttach, ICanBeAttacked, ICanMove } from './base';
+import { IChip } from './chip';
 import { IAbsolutePosition } from './information';
 
 export interface IMechModel extends ICanBeAttacked, ICanAttach, ICanMove, IBase {
@@ -23,5 +24,6 @@ export interface IMechState {
 
 export interface IMech {
   model: IMechModel;
+  chip: IChip;
   state: IMechState;
 }
