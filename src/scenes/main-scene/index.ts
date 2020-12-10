@@ -5,7 +5,15 @@ export default class MainScene extends Phaser.Scene {
     super('main-scene');
   }
 
-  preload() {}
+  preload() {
 
-  create() {}
+  }
+
+  create() {
+
+  }
+
+  update() {
+    
+  }
 }
