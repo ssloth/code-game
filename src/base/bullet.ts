@@ -20,7 +20,7 @@ export class Bullet implements IBullet {
   }
 
   private constructor(sprite: string, public model: IBulletModel, public state: IBulletState) {
-    this.sprite = MainScene.scene.physics.add.sprite(0, 0, sprite);
+    this.sprite = MainScene.scene.physics.add.sprite(state.position.x, state.position.y, sprite);
     MainScene.scene.physics.add.existing(this.sprite);
   }
 
