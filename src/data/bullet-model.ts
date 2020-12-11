@@ -14,7 +14,7 @@ export function factory(data: BulletDataLoad[]): IBulletModel[] {
   }
 }
 
-export const data: IBulletModel[] = factory([
+export const bulletModelData: IBulletModel[] = factory([
   [100, 1000, 0, [10, 10]],
   [200, 1000, 0, [10, 10]],
   [300, 1000, 0, [10, 10]],

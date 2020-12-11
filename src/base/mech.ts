@@ -11,12 +11,12 @@ export class Mech implements IMech {
   state: IMechState;
   actionSequence: IActionSequence;
   constructor(
-    context: { scene: Scene; texture: Textures.Texture },
+    context: { scene: Scene; sprite: string },
     public model: IMechModel,
     public chip: IChip,
   ) {
     this.id = Mech.cid++;
-    this.sprite = context.scene.add.sprite(0, 0, 'logo');
+    this.sprite = context.scene.add.sprite(0, 0, context.sprite);
     this.state = {
       MODEL: this.model,
       health: this.model.MAX_HEALTH,

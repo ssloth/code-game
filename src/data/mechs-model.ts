@@ -26,7 +26,7 @@ export function factory(data: MechDataLoad[]): IMechModel[] {
   }
 }
 
-export const data: IMechModel[] = factory([
+export const mechModelData: IMechModel[] = factory([
   ['WA-01', 100, 1000, 1000, 1000, 1000, 10, [10, 10]],
   ['WA-02', 200, 1000, 1000, 1000, 1000, 10, [10, 10]],
   ['WA-03', 300, 1000, 1000, 1000, 1000, 10, [10, 10]],

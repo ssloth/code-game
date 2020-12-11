@@ -1,4 +1,4 @@
-import { IPlayerData } from '~src/open-command/type';
+import { IPlayerData } from '~src/game/main/open-command/type';
 
 export default {
   name: 'computer',

@@ -1,9 +1,11 @@
+import { Bullet } from '~src/base/bullet';
 import { GameDate } from '~src/base/interfaces/information';
 import { Mech } from '~src/base/mech';
 import { Faction, Player } from '~src/base/player';
-import { IPlayerData } from '~src/open-command/type';
+import { IPlayerData } from '~src/game/main/open-command/type';
 import { doMechCommand } from './do-mech-command';
 import { doPlayerCommand } from './do-player-command';
+import { flushBullet } from './flush-bullet';
 import { flushMechAction } from './flush-mech-action';
 import { MechPositionRelation, pretreatment } from './pretreatment';
 
@@ -15,16 +17,22 @@ export interface GameData {
 export class GameCore {
   private players: Map<string, Player>;
   private factions: Map<string, Faction>;
+  private bullets: Bullet[];
 
   constructor() {
     this.players = new Map();
     this.factions = new Map();
+    this.bullets = [];
   }
 
   // 帧
   tick(ct: number) {
     const mechs = this.getAllMechs();
     mechs.forEach((mech) => flushMechAction(mech));
+    this.bullets = this.bullets.filter((bullet) => {
+      flushBullet(bullet);
+      return !bullet.destroy;
+    });
   }
 
   // 每 50 次 动画 一次 tick 约 1000ms
@@ -53,6 +61,10 @@ export class GameCore {
   addMech(playerName: string, mech: Mech) {
     const players = this.players.get(playerName);
     players?.mechs.push(mech);
+  }
+
+  addBullet(bullet: Bullet) {
+    this.bullets.push(bullet);
   }
 
   private getAllPlayer() {

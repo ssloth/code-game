@@ -1,6 +1,7 @@
 import { IAbsolutePosition } from '~src/base/interfaces/information';
 import { Mech } from '~src/base/mech';
 import { GameData } from './game-core';
+import { attach, move } from './open-command/mech';
 
 export const doMechCommand = (mech: Mech, gameData: GameData) => {
   const { gameDate, mechPositionRelation } = gameData;
@@ -23,10 +24,8 @@ export const doMechCommand = (mech: Mech, gameData: GameData) => {
       empty: [],
     },
     {
-      move: (position: IAbsolutePosition) => {
-        mech.actionSequence.moveTarget = position;
-      },
-      attach: (position: IAbsolutePosition) => {},
+      move: (position: IAbsolutePosition) => move(mech, position),
+      attach: (position: IAbsolutePosition) => attach(mech, position),
     },
   );
 };
