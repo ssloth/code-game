@@ -10,10 +10,10 @@ const start = () => {
   const creator = createCreator(scene);
   const mech1 = creator.createMech(0);
   scene.gameCore.addMech('computer', mech1);
-  // const mech2 = creator.createMech(1);
-  // scene.gameCore.addMech('computer', mech2);
-  // const mech3 = creator.createMech(2);
-  // scene.gameCore.addMech('computer', mech3);
+  const mech2 = creator.createMech(1);
+  scene.gameCore.addMech('computer', mech2);
+  const mech3 = creator.createMech(2);
+  scene.gameCore.addMech('computer', mech3);
 };
 
 setTimeout(start, 1000);

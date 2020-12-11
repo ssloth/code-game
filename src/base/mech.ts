@@ -1,4 +1,5 @@
 import Phaser, { Scene, Textures } from 'phaser';
+import MainScene from '~src/game/main';
 import { Concealment } from './interfaces/base';
 import { IChip } from './interfaces/chip';
 import { ICartesianCoordinate } from './interfaces/information';
@@ -17,6 +18,9 @@ export class Mech implements IMech {
   ) {
     this.id = Mech.cid++;
     this.sprite = context.scene.add.sprite(0, 0, context.sprite);
+    this.sprite.setSize(50, 50);
+    context.scene.physics.add.existing(this.sprite);
+
     this.state = {
       MODEL: this.model,
       health: this.model.MAX_HEALTH,
@@ -30,9 +34,13 @@ export class Mech implements IMech {
   }
 
   setPosition(x: number, y: number) {
-    this.sprite.x = x;
-    this.sprite.y = y;
+    this.sprite.body.position.x = x;
+    this.sprite.body.position.y = y;
     this.state.position = { x, y };
+  }
+
+  destroy() {
+    this.sprite.destroy();
   }
 }
 
@@ -48,9 +56,5 @@ export class MechModel implements IMechModel {
 
   constructor(data: IMechModel) {
     Object.entries(data).forEach(([k, v]) => (this[k] = v));
-  }
-
-  move(position: ICartesianCoordinate): this {
-    return this;
   }
 }

@@ -12,11 +12,15 @@ export class Bullet implements IBullet {
     public state: IBulletState,
   ) {
     this.sprite = context.scene.add.sprite(0, 0, context.sprite);
+    this.sprite.setSize(50, 50);
+    context.scene.physics.add.existing(this.sprite);
     this.destroy = false;
   }
+
   setPosition(x: number, y: number) {
-    this.sprite.x = x;
-    this.sprite.y = y;
+    if (!this.sprite.body) return;
+    this.sprite.body.position.x = x;
+    this.sprite.body.position.y = y;
     this.state.position = { x, y };
   }
 

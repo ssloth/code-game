@@ -2,13 +2,12 @@ import Phaser from 'phaser';
 import { GameCore } from './game-core';
 
 export default class MainScene extends Phaser.Scene {
-  public gameCore: GameCore;
+  public gameCore!: GameCore;
   private tc = 0;
   private gameDate = 0;
   static scene: MainScene;
   constructor() {
     super('main-scene');
-    this.gameCore = new GameCore();
     MainScene.scene = this;
   }
 
@@ -20,7 +19,10 @@ export default class MainScene extends Phaser.Scene {
     this.load.image('plasma', 'res/mech/plasma.png');
   }
 
-  create() {}
+  create() {
+    this.gameCore = new GameCore();
+    this.gameCore.init();
+  }
 
   update() {
     this.tick();
