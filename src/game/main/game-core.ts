@@ -1,9 +1,16 @@
+import { GameDate } from '~src/base/interfaces/information';
 import { Mech } from '~src/base/mech';
 import { Faction, Player } from '~src/base/player';
 import { IPlayerData } from '~src/open-command/type';
 import { doMechCommand } from './do-mech-command';
 import { doPlayerCommand } from './do-player-command';
 import { flushMechAction } from './flush-mech-action';
+import { MechPositionRelation, pretreatment } from './pretreatment';
+
+export interface GameData {
+  mechPositionRelation: MechPositionRelation;
+  gameDate: GameDate;
+}
 
 export class GameCore {
   private players: Map<string, Player>;
@@ -17,15 +24,16 @@ export class GameCore {
   // 帧
   tick(ct: number) {
     const mechs = this.getAllMechs();
-    mechs.forEach((mech) => flushMechAction(mech, ct))
+    mechs.forEach((mech) => flushMechAction(mech));
   }
 
   // 每 50 次 动画 一次 tick 约 1000ms
-  tick50() {
+  tick50(gameDate: GameDate) {
     const mechs = this.getAllMechs();
     const players = this.getAllPlayer();
-    players.forEach(doPlayerCommand);
-    mechs.forEach(doMechCommand);
+    const mechPositionRelation = pretreatment(mechs);
+    players.forEach((p) => doPlayerCommand(p, { ...mechPositionRelation, gameDate }));
+    mechs.forEach((m) => doMechCommand(m, { ...mechPositionRelation, gameDate }));
   }
 
   addPlayer(playerData: IPlayerData) {

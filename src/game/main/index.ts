@@ -4,6 +4,7 @@ import { GameCore } from './game-core';
 export default class MainScene extends Phaser.Scene {
   public gameCore: GameCore;
   private tc = 0;
+  private gameDate = 0;
   constructor() {
     super('main-scene');
     this.gameCore = new GameCore();
@@ -29,9 +30,8 @@ export default class MainScene extends Phaser.Scene {
 
   tick() {
     if (this.tc % 50 === 0) {
-      this.gameCore.tick50();
-    } else {
-      this.tc++;
+      this.gameCore.tick50(this.gameDate++);
     }
+    this.tc++;
   }
 }

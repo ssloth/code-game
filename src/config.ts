@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import scenes from './scenes';
+import scenes from './game';
 
 export default {
   type: Phaser.AUTO,

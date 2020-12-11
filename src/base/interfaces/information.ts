@@ -30,7 +30,12 @@ export interface IEmptyInformation {
   position: IPosition;
 }
 
+export type GameDate = number;
+export interface IWorldInformation {
+  gameDate: GameDate;
+}
 export interface IBaeInformation {
+  world: IWorldInformation;
   self: ISelfInformation;
   friend: IFriendInformation[];
   empty: IEmptyInformation[];

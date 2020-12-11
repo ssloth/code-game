@@ -5,6 +5,8 @@ import { ICartesianCoordinate } from './interfaces/information';
 import { IActionSequence, IMech, IMechModel, IMechState } from './interfaces/mech';
 
 export class Mech implements IMech {
+  static cid: number = 0;
+  id: number;
   sprite: Phaser.GameObjects.Sprite;
   state: IMechState;
   actionSequence: IActionSequence;
@@ -13,6 +15,7 @@ export class Mech implements IMech {
     public model: IMechModel,
     public chip: IChip,
   ) {
+    this.id = Mech.cid++;
     this.sprite = context.scene.add.sprite(0, 0, 'logo');
     this.state = {
       MODEL: this.model,
