@@ -1,3 +1,4 @@
+import { GameObjects } from 'phaser';
 import { Bullet } from '~src/base/bullet';
 import { GameDate } from '~src/base/interfaces/information';
 import { Mech } from '~src/base/mech';
@@ -19,7 +20,7 @@ export class GameCore {
   private players: Map<string, Player>;
   private factions: Map<string, Faction>;
   private bullets: Bullet[];
-  private bulletGroup: any;
+  private bulletGroup!: GameObjects.Group;
   scene!: MainScene;
   constructor() {
     this.players = new Map();
@@ -29,7 +30,7 @@ export class GameCore {
 
   init() {
     this.scene = MainScene.scene;
-    this.bulletGroup = this.scene.add.group();
+    this.bulletGroup = this.scene.physics.add.group();
   }
 
   // 帧
@@ -48,7 +49,7 @@ export class GameCore {
     const players = this.getAllPlayer();
     const mechPositionRelation = pretreatment(mechs);
     doPlayerCommand(players, { ...mechPositionRelation, gameDate });
-    doMechCommand(mechs, { ...mechPositionRelation, gameDate })
+    doMechCommand(mechs, { ...mechPositionRelation, gameDate });
   }
 
   addPlayer(playerData: IPlayerData) {
@@ -67,9 +68,15 @@ export class GameCore {
 
   addMech(playerName: string, mech: Mech) {
     const players = this.players.get(playerName);
-    this.scene.physics.overlap(mech.sprite,this.bulletGroup, () => {
-      mech.destroy();
-    }, undefined, this.scene);
+    this.scene.physics.add.overlap(
+      mech.sprite,
+      this.bulletGroup,
+      () => {
+        mech.destroy();
+      },
+      undefined,
+      this.scene,
+    );
     players?.mechs.push(mech);
   }
 

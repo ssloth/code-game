@@ -4,15 +4,14 @@ import { IBulletModel, IBullet, IBulletState } from './interfaces/bullet';
 import { ICartesianCoordinate } from './interfaces/information';
 
 export class Bullet implements IBullet {
-  sprite: Phaser.GameObjects.Sprite;
+  sprite: Phaser.Physics.Arcade.Sprite;
   destroy: boolean;
   constructor(
     context: { scene: Scene; sprite: string },
     public model: IBulletModel,
     public state: IBulletState,
   ) {
-    this.sprite = context.scene.add.sprite(0, 0, context.sprite);
-    this.sprite.setSize(50, 50);
+    this.sprite = context.scene.physics.add.sprite(0, 0, context.sprite)
     context.scene.physics.add.existing(this.sprite);
     this.destroy = false;
   }

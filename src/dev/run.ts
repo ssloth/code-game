@@ -14,6 +14,8 @@ const start = () => {
   scene.gameCore.addMech('computer', mech2);
   const mech3 = creator.createMech(2);
   scene.gameCore.addMech('computer', mech3);
+
+  console.log(scene.physics)
 };
 
 setTimeout(start, 1000);

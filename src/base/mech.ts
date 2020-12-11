@@ -1,14 +1,12 @@
 import Phaser, { Scene, Textures } from 'phaser';
-import MainScene from '~src/game/main';
 import { Concealment } from './interfaces/base';
 import { IChip } from './interfaces/chip';
-import { ICartesianCoordinate } from './interfaces/information';
 import { IActionSequence, IMech, IMechModel, IMechState } from './interfaces/mech';
 
 export class Mech implements IMech {
   static cid: number = 0;
   id: number;
-  sprite: Phaser.GameObjects.Sprite;
+  sprite: Phaser.Physics.Arcade.Sprite;
   state: IMechState;
   actionSequence: IActionSequence;
   constructor(
@@ -17,8 +15,7 @@ export class Mech implements IMech {
     public chip: IChip,
   ) {
     this.id = Mech.cid++;
-    this.sprite = context.scene.add.sprite(0, 0, context.sprite);
-    this.sprite.setSize(50, 50);
+    this.sprite = context.scene.physics.add.sprite(0, 0, context.sprite);
     context.scene.physics.add.existing(this.sprite);
 
     this.state = {
@@ -30,10 +27,12 @@ export class Mech implements IMech {
       },
       status: [],
     };
+
     this.actionSequence = {};
   }
 
   setPosition(x: number, y: number) {
+    if (!this.sprite.body) return;
     this.sprite.body.position.x = x;
     this.sprite.body.position.y = y;
     this.state.position = { x, y };
