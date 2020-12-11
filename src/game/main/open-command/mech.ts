@@ -12,8 +12,8 @@ export const move = (mech: Mech, position: IAbsolutePosition) => {
 export const attach = (mech: Mech, position: IAbsolutePosition) => {
   const scene = MainScene.scene;
   scene.gameCore.addBullet(
-    new Bullet({ scene, sprite: 'plasma' }, bulletModelData[0], {
-      position: mech.state.position,
+    Bullet.create('plasma', bulletModelData[0], {
+      position: mech.sprite.body.position,
       target: position,
     }),
   );

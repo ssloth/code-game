@@ -18,8 +18,6 @@ export interface IMechState {
   health: number;
   // 状态
   status: any;
-  // 当前位置信息
-  position: IAbsolutePosition;
 }
 
 export interface IActionSequence {

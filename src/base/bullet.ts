@@ -1,31 +1,31 @@
 import { Scene } from 'phaser';
+import MainScene from '~src/game/main';
 import { Concealment } from './interfaces/base';
 import { IBulletModel, IBullet, IBulletState } from './interfaces/bullet';
 import { ICartesianCoordinate } from './interfaces/information';
 
 export class Bullet implements IBullet {
   sprite: Phaser.Physics.Arcade.Sprite;
-  destroy: boolean;
-  constructor(
-    context: { scene: Scene; sprite: string },
-    public model: IBulletModel,
-    public state: IBulletState,
-  ) {
-    this.sprite = context.scene.physics.add.sprite(0, 0, context.sprite)
-    context.scene.physics.add.existing(this.sprite);
-    this.destroy = false;
+  static instances: Bullet[] = [];
+
+  static create(sprite: string, model: IBulletModel, state: IBulletState) {
+    const bullet = new Bullet(sprite, model, state);
+    Bullet.instances.push(bullet);
+    return bullet;
   }
 
-  setPosition(x: number, y: number) {
-    if (!this.sprite.body) return;
-    this.sprite.body.position.x = x;
-    this.sprite.body.position.y = y;
-    this.state.position = { x, y };
+  static destroy(bullet: Bullet) {
+    const index = Bullet.instances.indexOf(bullet);
+    Bullet.instances.splice(index, 1);
   }
 
-  hit() {
-    this.destroy = false;
-    this.sprite.destroy();
+  private constructor(sprite: string, public model: IBulletModel, public state: IBulletState) {
+    this.sprite = MainScene.scene.physics.add.sprite(0, 0, sprite);
+    MainScene.scene.physics.add.existing(this.sprite);
+  }
+
+  destroy() {
+    Bullet.destroy(this);
   }
 }
 
