@@ -1,6 +1,5 @@
 import { Scene } from 'phaser';
 import MainScene from '~src/game/main';
-import { computeXY } from '~src/utils/move';
 import { Concealment } from './interfaces/base';
 import { IBulletModel, IBullet, IBulletState } from './interfaces/bullet';
 import { ICartesianCoordinate } from './interfaces/information';
@@ -26,15 +25,7 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite implements IBullet {
     this.body.setSize(10, 10);
   }
 
-  update() {
-    if (!this.body) return;
-    const speed = this.model.SPEED;
-    const { x, y, a } = computeXY(this.body.position, this._state.target, speed);
-    this.body.position.x = x;
-    this.body.position.y = y;
-    if (!a) return this.destroy();
-    this.setAngle((a * 180) / Math.PI);
-  }
+  update() {}
 
   destroy() {
     super.destroy();

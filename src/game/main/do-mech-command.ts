@@ -1,9 +1,8 @@
 import { IAbsolutePosition } from '~src/base/interfaces/information';
-import { Mech } from '~src/base/mech';
 import { GameData } from './game-core';
-import { attach, move } from './open-command/mech';
+import { BaseMech } from './mechs/base-mech';
 
-export const doMechCommand = (mechs: Mech[], gameData: GameData) => {
+export const doMechCommand = (mechs: BaseMech[], gameData: GameData) => {
   const { gameDate, mechPositionRelation } = gameData;
   mechs.forEach((mech) => {
     mech.chip.AI(
@@ -25,8 +24,8 @@ export const doMechCommand = (mechs: Mech[], gameData: GameData) => {
         empty: [],
       },
       {
-        move: (position: IAbsolutePosition) => move(mech, position),
-        attach: (position: IAbsolutePosition) => attach(mech, position),
+        move: (position: IAbsolutePosition) => mech,
+        attach: (position: IAbsolutePosition) => mech,
       },
     );
   });

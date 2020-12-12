@@ -5,10 +5,10 @@ export interface IBulletModel extends IBase, ICanMove, ICanAttach {}
 
 export interface IBulletState {
   position: IAbsolutePosition;
-  target: IAbsolutePosition;
+  target: IAbsolutePosition | IAbsolutePosition;
 }
 
-export interface IBullet extends  Phaser.GameObjects.Sprite {
+export interface IBullet extends Phaser.GameObjects.Sprite {
   model: IBulletModel;
   _state: IBulletState;
 }
