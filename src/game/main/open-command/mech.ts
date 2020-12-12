@@ -9,12 +9,18 @@ export const move = (mech: Mech, position: IAbsolutePosition) => {
   mech.actionSequence.moveTarget = { ...position };
 };
 
-export const attach = (mech: Mech, position: IAbsolutePosition) => {
+export const attach = (mech: Mech, target: IAbsolutePosition) => {
   const scene = MainScene.scene;
+  const { angle } = mech;
+  const { x, y } = mech.body;
+  const current = {
+    x: x + 10 * Math.cos((angle * Math.PI) / 180),
+    y: y + 10 * Math.sin((angle * Math.PI) / 180),
+  };
   scene.gameCore.addBullet(
     Bullet.create('plasma', bulletModelData[0], {
-      position: mech.sprite.body.position,
-      target: position,
+      position: current,
+      target: target,
     }),
   );
 };

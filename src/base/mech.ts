@@ -1,10 +1,11 @@
 import Phaser, { Scene, Textures } from 'phaser';
 import MainScene from '~src/game/main';
+import { computeXY } from '~src/utils/move';
 import { Concealment } from './interfaces/base';
 import { IChip } from './interfaces/chip';
 import { IActionSequence, IMech, IMechModel, IMechState } from './interfaces/mech';
 
-export class Mech implements IMech {
+export class Mech extends Phaser.Physics.Arcade.Sprite implements IMech {
   static instances: Mech[] = [];
 
   static create(sprite: string, model: IMechModel, state: IChip) {
@@ -18,15 +19,15 @@ export class Mech implements IMech {
     Mech.instances.splice(index, 1);
   }
 
-  sprite: Phaser.Physics.Arcade.Sprite;
-  state: IMechState;
+  _state: IMechState;
   actionSequence: IActionSequence;
 
   constructor(sprite: string, public model: IMechModel, public chip: IChip) {
-    this.sprite = MainScene.scene.physics.add.sprite(0, 0, sprite);
-    MainScene.scene.physics.add.existing(this.sprite);
+    super(MainScene.scene, 0, 0, sprite);
+    MainScene.scene.physics.add.existing(this);
+    MainScene.scene.add.existing(this);
 
-    this.state = {
+    this._state = {
       MODEL: this.model,
       health: this.model.MAX_HEALTH,
       status: [],
@@ -35,8 +36,22 @@ export class Mech implements IMech {
     this.actionSequence = {};
   }
 
+  update() {
+    if (!this.body || !this.actionSequence.moveTarget) return;
+    const speed = this.model.SPEED;
+    const { x, y, a } = computeXY(this.body.position, this.actionSequence.moveTarget, speed);
+    if (a) this.angle = (a * 180) / Math.PI;
+    this.body.position.x = x;
+    this.body.position.y = y;
+  }
+
   destroy() {
+    super.destroy();
     Mech.destroy(this);
+  }
+
+  attach(x: number, y: number) {
+    
   }
 }
 

@@ -8,8 +8,7 @@ export interface IBulletState {
   target: IAbsolutePosition;
 }
 
-export interface IBullet {
-  sprite: Phaser.GameObjects.Sprite;
+export interface IBullet extends  Phaser.GameObjects.Sprite {
   model: IBulletModel;
-  state: IBulletState;
+  _state: IBulletState;
 }

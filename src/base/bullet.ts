@@ -1,11 +1,11 @@
 import { Scene } from 'phaser';
 import MainScene from '~src/game/main';
+import { computeXY } from '~src/utils/move';
 import { Concealment } from './interfaces/base';
 import { IBulletModel, IBullet, IBulletState } from './interfaces/bullet';
 import { ICartesianCoordinate } from './interfaces/information';
 
-export class Bullet implements IBullet {
-  sprite: Phaser.Physics.Arcade.Sprite;
+export class Bullet extends Phaser.Physics.Arcade.Sprite implements IBullet {
   static instances: Bullet[] = [];
 
   static create(sprite: string, model: IBulletModel, state: IBulletState) {
@@ -19,12 +19,25 @@ export class Bullet implements IBullet {
     Bullet.instances.splice(index, 1);
   }
 
-  private constructor(sprite: string, public model: IBulletModel, public state: IBulletState) {
-    this.sprite = MainScene.scene.physics.add.sprite(state.position.x, state.position.y, sprite);
-    MainScene.scene.physics.add.existing(this.sprite);
+  private constructor(sprite: string, public model: IBulletModel, public _state: IBulletState) {
+    super(MainScene.scene, _state.position.x, _state.position.y, sprite);
+    MainScene.scene.physics.add.existing(this);
+    MainScene.scene.add.existing(this);
+    this.body.setSize(10, 10);
+  }
+
+  update() {
+    if (!this.body) return;
+    const speed = this.model.SPEED;
+    const { x, y, a } = computeXY(this.body.position, this._state.target, speed);
+    this.body.position.x = x;
+    this.body.position.y = y;
+    if (!a) return this.destroy();
+    this.setAngle((a * 180) / Math.PI);
   }
 
   destroy() {
+    super.destroy();
     Bullet.destroy(this);
   }
 }

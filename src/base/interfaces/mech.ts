@@ -27,7 +27,6 @@ export interface IActionSequence {
 export interface IMech {
   model: IMechModel;
   chip: IChip;
-  state: IMechState;
+  _state: IMechState;
   actionSequence: IActionSequence;
-  sprite: Phaser.GameObjects.Sprite;
 }

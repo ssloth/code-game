@@ -7,8 +7,6 @@ import { IPlayerData } from '~src/game/main/open-command/type';
 import MainScene from '.';
 import { doMechCommand } from './do-mech-command';
 import { doPlayerCommand } from './do-player-command';
-import { flushBullet } from './flush-bullet';
-import { flushMechAction } from './flush-mech-action';
 import { MechPositionRelation, pretreatment } from './pretreatment';
 
 export interface GameData {
@@ -36,8 +34,9 @@ export class GameCore {
   }
 
   // 帧
-  tick(ct: number) {
-    flushMechAction(Mech.instances);
+  tick(ct: number) { 
+    Mech.instances.forEach(item => item.update())
+    Bullet.instances.forEach(item => item.update())
   }
 
   // 每 50 次 动画 一次 tick 约 1000ms
@@ -63,7 +62,7 @@ export class GameCore {
 
   addMech(playerName: string, mech: Mech) {
     this.scene.physics.add.overlap(
-      mech.sprite,
+      mech,
       this.bulletGroup,
       () => {
         mech.destroy();
@@ -74,7 +73,7 @@ export class GameCore {
   }
 
   addBullet(bullet: Bullet) {
-    this.bulletGroup.add(bullet.sprite);
+    this.bulletGroup.add(bullet);
     this.bullets.push(bullet);
   }
 }
