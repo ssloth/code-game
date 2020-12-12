@@ -4,6 +4,7 @@ export default class TestScene extends Phaser.Scene {
   private tc = 0;
   static scene: TestScene;
   private state: any = {};
+  mech!: Phaser.Physics.Matter.Sprite;
   constructor() {
     super('test-scene');
     TestScene.scene = this;
@@ -18,9 +19,10 @@ export default class TestScene extends Phaser.Scene {
   }
 
   create() {
-    const mech = this.physics.add.sprite(100, 100, 'bullet');
-    this.physics.add.existing(mech);
-    mech.body
+    this.mech = this.matter.add.sprite(100, 100, 'bullet', undefined, {
+      density: 100,
+      frictionAir: 0.3,
+    });
   }
 
   update() {
@@ -32,7 +34,9 @@ export default class TestScene extends Phaser.Scene {
     this.tc++;
   }
 
-  draw() {}
+  draw() {
+    this.mech.applyForce(new Phaser.Math.Vector2(this.tc > 500 ? -10 : 10, 0));
+  }
 
   tick() {}
 }

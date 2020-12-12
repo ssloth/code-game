@@ -1,10 +1,8 @@
-import { IChip } from '~src/base/interfaces/chip';
+import { IBaseMechChip } from '~src/game/main/mechs/base-mech';
 
-export const base: IChip = {
-  name: 'BASE-1',
-  AI: (information, command) => {
-    command.move({ x: Math.floor(Math.random() * 500), y: Math.floor(Math.random() * 500) });
-    if (information.world.gameDate % 10 === 9)
-      command.attach({ x: Math.floor(Math.random() * 500), y: Math.floor(Math.random() * 500) });
+export const base: IBaseMechChip = {
+  AI: (information, operations) => {
+    operations.forward();
+    if (information.world.date % 10 === 0) operations.rotateLeft();
   },
 };

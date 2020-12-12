@@ -1,7 +1,9 @@
-import { IBase, ICanAttach, ICanMove } from './base';
+import { IBase, ICanAttach } from './base';
 import { IAbsolutePosition } from './information';
 
-export interface IBulletModel extends IBase, ICanMove, ICanAttach {}
+export interface IBulletModel extends IBase, ICanAttach {
+  SPEED: number
+}
 
 export interface IBulletState {
   position: IAbsolutePosition;

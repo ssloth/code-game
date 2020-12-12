@@ -5,10 +5,15 @@ export default {
   type: Phaser.AUTO,
   width: 800,
   height: 600,
+  pixelArt: true,
   physics: {
-    default: 'arcade',
-    arcade: {
+    default: 'matter',
+    matter: {
       debug: true,
+      gravity: {
+        x: 0,
+        y: 0,
+      },
     },
   },
   scene: scenes,

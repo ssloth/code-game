@@ -1,11 +1,14 @@
-export type Concealment = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
 
 // 基础属性
 export interface IBase {
   // 隐蔽性 为 0 时 不可被发现
-  CONCEALMENT: Concealment;
+  readonly CONCEALMENT: number;
   // 大小
-  SIZE: { WIDTH: number; HEIGHT: number };
+  readonly SIZE: { WIDTH: number; HEIGHT: number };
+  // 密度
+  readonly DENSITY: number;
+  // 阻力
+  readonly FRICTION_AIR: number;
 }
 
 // 可以被攻击的单位
@@ -20,7 +23,3 @@ export interface ICanAttach {
   ATTACK_POWER: number;
 }
 
-// 可以移动的单位
-export interface ICanMove {
-  SPEED: number;
-}

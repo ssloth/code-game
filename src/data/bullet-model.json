@@ -1,0 +1,12 @@
+{
+  "desc": "装甲型号",
+  "data": [
+    {
+      "name": "B-1",
+      "speed": 100,
+      "size": { "width": 100, "height": 100 },
+      "attack_power": 100,
+      "image": "/"
+    }
+  ]
+}

@@ -8,14 +8,9 @@ const start = () => {
   scene.gameCore.addPlayer(computer);
   scene.gameCore.addPlayer(computer);
   const creator = createCreator(scene);
-  const mech1 = creator.createMech(0);
-  scene.gameCore.addMech('computer', mech1);
-  const mech2 = creator.createMech(1);
-  scene.gameCore.addMech('computer', mech2);
-  const mech3 = creator.createMech(2);
-  scene.gameCore.addMech('computer', mech3);
-
-  console.log(scene.physics)
+  console.log(creator.createMech(1));
+  creator.createMech(0);
+  creator.createMech(2);
 };
 
 setTimeout(start, 1000);

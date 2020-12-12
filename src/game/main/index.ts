@@ -26,16 +26,17 @@ export default class MainScene extends Phaser.Scene {
 
   update() {
     this.tick();
-    this.draw();
-  }
-
-  draw() {
-    this.gameCore.tick(this.tc);
+    this.tick50();
   }
 
   tick() {
+    this.gameCore.tick(this.tc);
+  }
+
+  tick50() {
     if (this.tc % 50 === 0) {
-      this.gameCore.tick50(this.gameDate++);
+      this.gameCore.tick50(++this.gameDate);
+      this.events.emit('game-tick', this.gameDate);
     }
     this.tc++;
   }
