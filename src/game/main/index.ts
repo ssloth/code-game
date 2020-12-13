@@ -13,6 +13,8 @@ export default class MainScene extends Phaser.Scene {
 
   preload() {
     this.load.setBaseURL('http://localhost:8989');
+    this.load.image('backdrop', 'res/bg/backdrop.png');
+    this.load.image('grid', 'res/bg/grid.png');
     this.load.image('bullet', 'res/mech/bullet.png');
     this.load.image('destroyer', 'res/mech/destroyer.png');
     this.load.image('oppressor', 'res/mech/oppressor.png');
@@ -22,6 +24,15 @@ export default class MainScene extends Phaser.Scene {
   create() {
     this.gameCore = new GameCore();
     this.gameCore.init();
+    this.add
+      .image(0, 0, 'backdrop')
+      .setScale(3, 1.25)
+      .setOrigin(0);
+    this.add.tileSprite(0, 0, 2000, 1600, 'grid');
+    this.matter.world.setBounds();
+    this.cameras.main.setBounds(0, 0, 100, 100);
+    this.cameras.main.setZoom(1);
+    this.cameras.main.centerOn(0, 0);
   }
 
   update() {

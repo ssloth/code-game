@@ -3,17 +3,16 @@ import { IActionSequence, IChip, IMech, IMechModel, IMechState } from './interfa
 
 export abstract class Mech extends Base implements IMech {
   _state: IMechState;
-  actionSequence: IActionSequence;
 
   constructor(sprite: string, public model: IMechModel, public chip: IChip) {
-    super(sprite, 0, 0);
-    this.setSize(model.SIZE.WIDTH, model.SIZE.HEIGHT);
+    super(sprite, 50, 50);
+    this.setDisplaySize(model.SIZE.WIDTH, model.SIZE.HEIGHT);
 
     this._state = {
       health: this.model.MAX_HEALTH,
       status: [],
     };
-
-    this.actionSequence = {};
+    this.setDensity(this.model.DENSITY);
+    this.setFrictionAir(this.model.FRICTION_AIR);
   }
 }

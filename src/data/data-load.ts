@@ -2,17 +2,18 @@ import { IBulletModel } from '~src/base/interfaces/bullet';
 import { IMechModel } from '~src/base/interfaces/mech';
 import mechModelData from './mech-model.json';
 import bulletModelData from './bullet-model.json';
-
 const data: {
   mechModels: { [key: string]: IMechModel };
   bulletModels: { [key: string]: IBulletModel };
 } = {
   mechModels: mechModelData.data
-    .map((data) => ({
+    .map((data: any) => ({
       NAME: data.name,
       MAX_ENERGY: data.max_energy,
       MAX_POWER: data.max_power,
       MAX_HEALTH: data.max_health,
+      MAX_THRUST: data.max_thrust / 1000,
+      MAX_SPEED: data.max_speed,
       ATTACK_POWER: data.attack_power,
       CONCEALMENT: data.concealment,
       DENSITY: data.density,
