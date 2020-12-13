@@ -1,5 +1,8 @@
-import { Math } from 'phaser';
+import MatterJS from 'matter';
+import { Math, } from 'phaser';
 import { Mech } from '~src/base/mech';
+import MainScene from '..';
+import { BaseBullte } from '../bullet/base-bullet';
 
 interface IOperations {
   // 保持现在状态
@@ -18,7 +21,7 @@ interface IOperations {
   move: (x: number, y: number) => Promise<any>;
 
   // 攻击
-  attach: () => Promise<any>;
+  attach: (x: number, y: number) => Promise<any>;
 
   // 最快到速度转到 a 度
   rotateTo: (a: number) => Promise<any>;
@@ -44,14 +47,17 @@ export interface ICurrentState {
   };
   force: Math.Vector2;
   velocity: Math.Vector2;
+  position: Math.Vector2;
 }
 
 export class BaseMech extends Mech {
+  radar!: MatterJS.BodyType;
   prev = {
     position: new Math.Vector2(this.x, this.y),
   };
 
   current: ICurrentState = {
+    position: new Math.Vector2(this.x, this.y),
     state: { move: 'keep', rotate: '', attach: '' },
     force: new Math.Vector2(0.000001, 0.000001),
     velocity: new Math.Vector2(0.000001, 0.000001),
@@ -60,6 +66,10 @@ export class BaseMech extends Mech {
   do = (name: keyof IOperations) => {
     this.state;
   };
+
+  onCreate() {
+    this.radar = this.scene.matter.add.circle(this.x, this.y, 100, { isSensor: true });
+  }
 
   operations: IOperations = {
     keep: () => {},
@@ -89,33 +99,35 @@ export class BaseMech extends Mech {
 
     move: async (x: number, y: number) => {},
 
-    attach: async () => {
+    attach: async (x: number, y: number) => {
       this.current.state.attach = 'attach';
+      const target = new Math.Vector2(x, y);
+      console.log('attch');
+      new BaseBullte('plasma', MainScene.scene.gameDataLoader.bulletModels['B-1'], {
+        current: this.current.position,
+        target: target,
+      });
     },
 
     rotateLeft: () => {
-      if (this.current.state.rotate === 'stop') return;
-      this.setRotation(0.01);
+      if (this.current.state.rotate === 'rotateRight') return;
       this.current.state.rotate = 'rotateLeft';
     },
 
     rotateRight: () => {
-      if (this.current.state.rotate === 'stop') return;
-      this.setRotation(0.01);
+      if (this.current.state.rotate === 'rotateRight') return;
       this.current.state.rotate = 'rotateRight';
     },
 
     rotateTo: async (a: number) => {},
 
     rotateLeftTo: async (a: number) => {
-      if (this.current.state.rotate === 'stop') return;
-      this.setRotation(0.01);
+      if (this.current.state.rotate === 'rotateLeftTo') return;
       this.current.state.rotate = 'rotateLeft';
     },
 
     rotateRightTo: async (a: number) => {
-      if (this.current.state.rotate === 'stop') return;
-      this.setRotation(0.01);
+      if (this.current.state.rotate === 'rotateRightTo') return;
       this.current.state.rotate = 'rotateRight';
     },
   };
@@ -127,23 +139,15 @@ export class BaseMech extends Mech {
   }
 
   gameTick(date: number) {
-    this.computeInformation();
     this.chip.AI(
       {
         world: {
           date: date,
         },
         self: {
-          position: {
-            absolute: {
-              x: 0,
-              y: 1,
-            },
-            relative: {
-              angle: 0,
-              distance: 0,
-            },
-          },
+          position: { x: this.x, y: this.y },
+          velocity: this.current.velocity.length(),
+          angle: this.current.velocity.angle(),
         },
         friend: [],
         empty: [],
@@ -153,8 +157,15 @@ export class BaseMech extends Mech {
   }
 
   update(): void {
-    if (this.current.velocity.length() > this.model.MAX_SPEED) return;
-    this.applyForce(this.current.force);
+    this.radar.position = {x: this.x, y:this.y};
+    this.current.position.set(this.x, this.y);
+    if (this.current.velocity.length() < this.model.MAX_SPEED) {
+      this.applyForce(this.current.force);
+    }
+  }
+
+  onCollide() {
+    console.log('!');
   }
 }
 

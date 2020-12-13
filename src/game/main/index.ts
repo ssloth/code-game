@@ -1,11 +1,12 @@
 import Phaser from 'phaser';
 import { GameCore } from './game-core';
-
+import data from '~src/data/data-load';
 export default class MainScene extends Phaser.Scene {
   public gameCore!: GameCore;
   private tc = 0;
   private gameDate = 0;
   static scene: MainScene;
+  gameDataLoader = data;
   constructor() {
     super('main-scene');
     MainScene.scene = this;
@@ -24,15 +25,16 @@ export default class MainScene extends Phaser.Scene {
   create() {
     this.gameCore = new GameCore();
     this.gameCore.init();
-    this.add
-      .image(0, 0, 'backdrop')
-      .setScale(3, 1.25)
-      .setOrigin(0);
-    this.add.tileSprite(0, 0, 2000, 1600, 'grid');
-    this.matter.world.setBounds();
-    this.cameras.main.setBounds(0, 0, 100, 100);
+    this.add.image(0, 0, 'backdrop').setScale(10, 2).setOrigin(0);
+    this.add.tileSprite(0, 0, 4000, 2000, 'grid');
+    this.cameras.main.setBounds(0, 0, 0, 0);
     this.cameras.main.setZoom(1);
     this.cameras.main.centerOn(0, 0);
+
+    this.matter.world.on('collisionstart', (_: any, a: any, b: any) => {
+      if (typeof a.gameObject?.onCollide === 'function') a.gameObject.onCollide(b.gameObject);
+      if (typeof b.gameObject?.onCollide === 'function') b.gameObject.onCollide(a.gameObject);
+    });
   }
 
   update() {

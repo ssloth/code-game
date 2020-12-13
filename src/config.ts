@@ -1,15 +1,17 @@
 import Phaser from 'phaser';
 import scenes from './game';
 
+const width = window.innerWidth;
+const height = window.innerHeight;
+
 export default {
   type: Phaser.AUTO,
-  width: 1000,
-  height: 800,
+  width,
+  height,
   pixelArt: true,
   physics: {
     default: 'matter',
     matter: {
-      enableSleeping: true,
       gravity: {
         x: 0,
         y: 0,

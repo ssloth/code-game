@@ -1,7 +1,8 @@
-import { Base } from './base';
+import { BlendModes } from 'phaser';
+import { BaseSprite } from './base';
 import { IActionSequence, IChip, IMech, IMechModel, IMechState } from './interfaces/mech';
 
-export abstract class Mech extends Base implements IMech {
+export abstract class Mech extends BaseSprite implements IMech {
   _state: IMechState;
 
   constructor(sprite: string, public model: IMechModel, public chip: IChip) {
@@ -14,5 +15,6 @@ export abstract class Mech extends Base implements IMech {
     };
     this.setDensity(this.model.DENSITY);
     this.setFrictionAir(this.model.FRICTION_AIR);
+    this.setSensor(true);
   }
 }
