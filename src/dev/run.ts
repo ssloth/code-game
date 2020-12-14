@@ -10,7 +10,7 @@ const start = () => {
   const creator = createCreator(scene);
   creator.createMech('M-1', 0);
   creator.createMech('M-2', 1);
-  creator.createMech('M-3', 2);
+  // creator.createMech('M-3', 2);
 };
 
 setTimeout(start, 1000);

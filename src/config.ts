@@ -43,13 +43,13 @@ export default {
         renderFill: true,
         renderLine: true,
 
-        fillColor: 0x106909,
-        fillOpacity: 1,
+        // fillColor: 0x106909,
+        fillOpacity: 0.1,
         lineColor: 0x28de19,
         lineOpacity: 1,
         lineThickness: 1,
 
-        staticFillColor: 0x0d177b,
+        // staticFillColor: 0x0d177b,
         staticLineColor: 0x1327e4,
 
         showSleeping: true,
@@ -58,7 +58,7 @@ export default {
         sleepLineColor: 0x999a99,
 
         showSensors: true,
-        sensorFillColor: 0x0d177b,
+        // sensorFillColor: 0x0d177b,
         sensorLineColor: 0x1327e4,
 
         showPositions: true,

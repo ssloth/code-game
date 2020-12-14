@@ -5,8 +5,12 @@ import { IActionSequence, IChip, IMech, IMechModel, IMechState } from './interfa
 export abstract class Mech extends BaseSprite implements IMech {
   _state: IMechState;
 
-  constructor(sprite: string, public model: IMechModel, public chip: IChip) {
-    super(sprite, 50, 50);
+  constructor(
+    config: { sprite: string; x: number; y: number },
+    public model: IMechModel,
+    public chip: IChip,
+  ) {
+    super(config.sprite, config.x, config.y);
     this.setDisplaySize(model.SIZE.WIDTH, model.SIZE.HEIGHT);
 
     this._state = {

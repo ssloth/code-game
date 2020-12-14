@@ -1,6 +1,6 @@
 import { Bullet } from '~src/base/bullet';
 
-export class BaseBullte extends Bullet {
+export class BaseBullet extends Bullet {
   onCreate() {}
   onCollide(m: any): void {}
   gameTick(date: number): void {}

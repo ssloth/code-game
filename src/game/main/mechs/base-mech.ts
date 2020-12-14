@@ -1,8 +1,9 @@
 import MatterJS from 'matter';
 import { Math, } from 'phaser';
 import { Mech } from '~src/base/mech';
+import { Radar } from '~src/base/radar';
 import MainScene from '..';
-import { BaseBullte } from '../bullet/base-bullet';
+import { BaseBullet } from '../bullet/base-bullet';
 
 interface IOperations {
   // 保持现在状态
@@ -51,7 +52,7 @@ export interface ICurrentState {
 }
 
 export class BaseMech extends Mech {
-  radar!: MatterJS.BodyType;
+  radar!: Radar;
   prev = {
     position: new Math.Vector2(this.x, this.y),
   };
@@ -68,7 +69,7 @@ export class BaseMech extends Mech {
   };
 
   onCreate() {
-    this.radar = this.scene.matter.add.circle(this.x, this.y, 100, { isSensor: true });
+    this.radar = new Radar(this, 90);
   }
 
   operations: IOperations = {
@@ -102,8 +103,7 @@ export class BaseMech extends Mech {
     attach: async (x: number, y: number) => {
       this.current.state.attach = 'attach';
       const target = new Math.Vector2(x, y);
-      console.log('attch');
-      new BaseBullte('plasma', MainScene.scene.gameDataLoader.bulletModels['B-1'], {
+      new BaseBullet('plasma', MainScene.scene.gameDataLoader.bulletModels['B-1'], {
         current: this.current.position,
         target: target,
       });
@@ -157,7 +157,6 @@ export class BaseMech extends Mech {
   }
 
   update(): void {
-    this.radar.position = {x: this.x, y:this.y};
     this.current.position.set(this.x, this.y);
     if (this.current.velocity.length() < this.model.MAX_SPEED) {
       this.applyForce(this.current.force);
