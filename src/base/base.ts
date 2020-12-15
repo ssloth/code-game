@@ -1,6 +1,7 @@
 import MainScene from '~src/game/main';
 
 export abstract class BaseImage extends Phaser.Physics.Matter.Image {
+  uid: number = 0;
   constructor(sprite: string, x: number, y: number) {
     super(MainScene.scene.matter.world, x, y, sprite);
     MainScene.scene.add.existing(this);
@@ -13,6 +14,7 @@ export abstract class BaseImage extends Phaser.Physics.Matter.Image {
       this.emit('update', ...args);
     });
     this.onCreate();
+    this.uid++;
   }
 
   abstract gameTick(date: number): void;
@@ -30,6 +32,7 @@ export abstract class BaseImage extends Phaser.Physics.Matter.Image {
 }
 
 export abstract class BaseSprite extends Phaser.Physics.Matter.Sprite {
+  uid: number = 0;
   constructor(sprite: string, x: number, y: number) {
     super(MainScene.scene.matter.world, x, y, sprite);
     MainScene.scene.add.existing(this);
@@ -42,6 +45,7 @@ export abstract class BaseSprite extends Phaser.Physics.Matter.Sprite {
       this.emit('update', ...args);
     });
     this.onCreate();
+    this.uid++;
   }
 
   abstract gameTick(date: number): void;

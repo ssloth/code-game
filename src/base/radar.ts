@@ -10,12 +10,13 @@ export class Radar {
   constructor(public mech: Mech, public range: number) {
     this.body = MainScene.scene.matter.add.circle(mech.x, mech.y, range, {
       isSensor: true,
-      collisionFilter: { group: -1, mask: 1 },
     });
     this.body.onCollideActiveCallback = _.throttle((p) => {
-      console.log(p);
+      if (p?.bodyA?.gameObject?.uid === mech.uid) return;
+      console.log(p)
     }, 1000);
     mech.on('update', () => (this.body.position = { x: mech.x, y: mech.y }));
     mech.on('destroy', () => 'radar destroys');
+    this.information = []
   }
 }
