@@ -1,7 +1,10 @@
+import { Body, BodyType } from 'matter';
 import MainScene from '~src/game/main';
 
 export abstract class BaseImage extends Phaser.Physics.Matter.Image {
   uid: number = 0;
+  body!: BodyType;
+
   constructor(sprite: string, x: number, y: number) {
     super(MainScene.scene.matter.world, x, y, sprite);
     MainScene.scene.add.existing(this);
@@ -33,6 +36,8 @@ export abstract class BaseImage extends Phaser.Physics.Matter.Image {
 
 export abstract class BaseSprite extends Phaser.Physics.Matter.Sprite {
   uid: number = 0;
+  body!: BodyType;
+  
   constructor(sprite: string, x: number, y: number) {
     super(MainScene.scene.matter.world, x, y, sprite);
     MainScene.scene.add.existing(this);

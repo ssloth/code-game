@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?> <!-- Created with Vectornator for iOS (http://vectornator.io/) --><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" xmlns:vectornator="http://vectornator.io" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" version="1.1" viewBox="0 0 500 500">
+<metadata>
+<vectornator:setting key="DimensionsVisible" value="1"/>
+<vectornator:setting key="New" value="1"/>
+<vectornator:setting key="SnapToPoints" value="0"/>
+<vectornator:setting key="OutlineMode" value="0"/>
+<vectornator:setting key="RulersVisible" value="1"/>
+<vectornator:setting key="GuidesVisible" value="1"/>
+<vectornator:setting key="SnapToEdges" value="1"/>
+<vectornator:setting key="CMYKEnabledKey" value="0"/>
+<vectornator:setting key="DisplayWhiteBackground" value="1"/>
+<vectornator:setting key="idAngle" value="25"/>
+<vectornator:setting key="SnapToGuides" value="1"/>
+<vectornator:setting key="Units" value="Pixels"/>
+<vectornator:setting key="GridSpacing" value="10"/>
+<vectornator:setting key="DynamicGuides" value="1"/>
+<vectornator:setting key="SnapToGrid" value="1"/>
+</metadata>
+<defs/>
+<g id="轮廓" vectornator:layerName="轮廓">
+<path stroke="#675eed" stroke-width="10" d="M348.633+233.871L253.546+291.277L81.0067+289.68L81.8461+177.125L253.927+176.137L348.633+233.871Z" fill="none" stroke-linecap="round" opacity="1" stroke-linejoin="round"/>
+<path stroke="#675eed" stroke-width="10" d="M333.019+89.9251L267.969+61.0298L148.956+60L67.1691+87.8175L29.7464+118.183L29.5504+177.397L148.569+176.779L267.588+176.161L334.644+175.627L437.616+174.807L480+174.88L333.019+89.9251Z" fill="none" stroke-linecap="round" opacity="1" stroke-linejoin="round"/>
+<path stroke="#675eed" stroke-width="10" d="M479.608+293.307L437.224+293.233L334.259+292.057L267.207+291.291L148.194+290.262L29.1804+289.232L28.9844+348.445L66.2058+378.94L147.807+407.04L266.826+406.422L332.067+377.752L479.608+293.307Z" fill="none" stroke-linecap="round" opacity="1" stroke-linejoin="round"/>
+</g>
+</svg>

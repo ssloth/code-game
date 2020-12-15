@@ -14,12 +14,17 @@ export default class MainScene extends Phaser.Scene {
 
   preload() {
     this.load.setBaseURL('http://localhost:8989');
+    this.load.atlas('space', 'res/space/space.png', 'res/space/space.json');
     this.load.image('backdrop', 'res/bg/backdrop.png');
     this.load.image('grid', 'res/bg/grid.png');
     this.load.image('bullet', 'res/mech/bullet.png');
     this.load.image('destroyer', 'res/mech/destroyer.png');
     this.load.image('oppressor', 'res/mech/oppressor.png');
     this.load.image('plasma', 'res/mech/plasma.png');
+    this.load.image('mech-1', 'res/mech/mech-1.svg');
+    this.load.image('mech-2', 'res/mech/mech-2.svg');
+    this.load.image('mech-3', 'res/mech/mech-3.svg');
+    this.load.image('mech-4', 'res/mech/mech-4.svg');
   }
 
   create() {

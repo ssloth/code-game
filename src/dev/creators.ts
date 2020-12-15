@@ -7,7 +7,7 @@ export default (scene: Scene) => {
   return {
     createMech: (m: string, bi: 0 | 1 | 2 = 0) =>
       new BaseMech(
-        { sprite: 'bullet', x: Math.random() * 500, y: Math.random() * 500 },
+        { sprite: 'mech-4', x: Math.random() * 500, y: Math.random() * 500 },
         data.mechModels[m],
         base[bi],
       ),

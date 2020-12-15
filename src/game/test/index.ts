@@ -1,10 +1,11 @@
 import Phaser from 'phaser';
-
+import Matter from 'matter';
 export default class TestScene extends Phaser.Scene {
   private tc = 0;
   static scene: TestScene;
   private state: any = {};
   mech!: Phaser.Physics.Matter.Sprite;
+  cons!: Matter.ConstraintType;
   constructor() {
     super('test-scene');
     TestScene.scene = this;
@@ -23,6 +24,9 @@ export default class TestScene extends Phaser.Scene {
       density: 100,
       frictionAir: 0.3,
     });
+    const radar = this.matter.add.circle(100, 100, 100, { isSensor: true });
+    radar.onCollideActiveCallback = (e: any) => console.log(e);
+
   }
 
   update() {
@@ -35,7 +39,7 @@ export default class TestScene extends Phaser.Scene {
   }
 
   draw() {
-    this.mech.applyForce(new Phaser.Math.Vector2(this.tc > 500 ? -10 : 10, 0));
+    this.mech.applyForce(new Phaser.Math.Vector2(this.tc > 10000 ? -10 : 10, 0));
   }
 
   tick() {}

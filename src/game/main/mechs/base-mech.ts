@@ -1,5 +1,5 @@
 import MatterJS from 'matter';
-import { Math, } from 'phaser';
+import { Math } from 'phaser';
 import { Mech } from '~src/base/mech';
 import { Radar } from '~src/base/radar';
 import MainScene from '..';
@@ -22,7 +22,7 @@ interface IOperations {
   move: (x: number, y: number) => Promise<any>;
 
   // 攻击
-  attach: (x: number, y: number) => Promise<any>;
+  attach: () => Promise<any>;
 
   // 最快到速度转到 a 度
   rotateTo: (a: number) => Promise<any>;
@@ -42,9 +42,9 @@ interface IOperations {
 
 export interface ICurrentState {
   state: {
-    move: 'forward' | 'back' | 'stop' | string;
-    rotate: 'left' | 'right' | string;
-    attach: 'attach' | string;
+    move: 'forward' | 'back' | 'stop' | '';
+    rotate: 'left' | 'right' | '';
+    attach: 'attach' | '';
   };
   force: Math.Vector2;
   velocity: Math.Vector2;
@@ -59,7 +59,7 @@ export class BaseMech extends Mech {
 
   current: ICurrentState = {
     position: new Math.Vector2(this.x, this.y),
-    state: { move: 'keep', rotate: '', attach: '' },
+    state: { move: '', rotate: '', attach: '' },
     force: new Math.Vector2(0.000001, 0.000001),
     velocity: new Math.Vector2(0.000001, 0.000001),
   };
@@ -70,6 +70,31 @@ export class BaseMech extends Mech {
 
   onCreate() {
     this.radar = new Radar(this, 90);
+
+    // const particles = this.scene.add.particles('space');
+    // const ship = this;
+    // particles.createEmitter({
+    //   frame: 'blue',
+    //   speed: {
+    //     onEmit: function (particle, key, t, value) {
+    //       return this.body?.speed;
+    //     },
+    //   },
+    //   lifespan: {
+    //     onEmit: (particle, key, t, value) => {
+    //       return Phaser.Math.Percent(ship.body?.speed, 0, 300) * 20000;
+    //     },
+    //   },
+    //   alpha: {
+    //     onEmit: function (particle, key, t, value) {
+    //       return Phaser.Math.Percent(ship.body?.speed, 0, 300) * 1000;
+    //     },
+    //   },
+    //   scale: { start: 1.0, end: 0 },
+    //   blendMode: 'ADD',
+    // }).startFollow(this);
+
+
   }
 
   operations: IOperations = {
@@ -100,35 +125,35 @@ export class BaseMech extends Mech {
 
     move: async (x: number, y: number) => {},
 
-    attach: async (x: number, y: number) => {
+    attach: async () => {
       this.current.state.attach = 'attach';
-      const target = new Math.Vector2(x, y);
+
       new BaseBullet('plasma', MainScene.scene.gameDataLoader.bulletModels['B-1'], {
         current: this.current.position,
-        target: target,
+        angle: this.angle,
       });
     },
 
     rotateLeft: () => {
-      if (this.current.state.rotate === 'rotateRight') return;
-      this.current.state.rotate = 'rotateLeft';
+      if (this.current.state.rotate === 'right') return;
+      this.current.state.rotate = 'right';
     },
 
     rotateRight: () => {
-      if (this.current.state.rotate === 'rotateRight') return;
-      this.current.state.rotate = 'rotateRight';
+      if (this.current.state.rotate === 'left') return;
+      this.current.state.rotate = 'left';
     },
 
     rotateTo: async (a: number) => {},
 
     rotateLeftTo: async (a: number) => {
-      if (this.current.state.rotate === 'rotateLeftTo') return;
-      this.current.state.rotate = 'rotateLeft';
+      if (this.current.state.rotate === 'right') return;
+      this.current.state.rotate = 'right';
     },
 
     rotateRightTo: async (a: number) => {
-      if (this.current.state.rotate === 'rotateRightTo') return;
-      this.current.state.rotate = 'rotateRight';
+      if (this.current.state.rotate === 'left') return;
+      this.current.state.rotate = 'left';
     },
   };
 
@@ -139,6 +164,7 @@ export class BaseMech extends Mech {
   }
 
   gameTick(date: number) {
+    this.current.state.rotate = '';
     this.chip.AI(
       {
         world: {
@@ -158,6 +184,12 @@ export class BaseMech extends Mech {
 
   update(): void {
     this.current.position.set(this.x, this.y);
+    if (this.current.state.rotate === 'left') {
+      this.setAngularVelocity(0.005);
+    } else if (this.current.state.rotate === 'right') {
+      this.setAngularVelocity(-0.005);
+    }
+    console.log('speed', this.body.speed);
     if (this.current.velocity.length() < this.model.MAX_SPEED) {
       this.applyForce(this.current.force);
     }
