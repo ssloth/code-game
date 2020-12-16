@@ -6,7 +6,7 @@
       "max_energy": 0,
       "max_power": 0,
       "max_health": 0,
-      "max_speed": 50,
+      "max_speed": 200,
       "radar": 300,
       "attack_power": 100,
       "concealment": 100,

@@ -16,6 +16,7 @@ export default {
         x: 0,
         y: 0,
       },
+      enableSleeping: true,
       debug: {
         showAxes: true,
         showAngleIndicator: true,

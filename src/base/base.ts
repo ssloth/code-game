@@ -9,11 +9,11 @@ export abstract class BaseImage extends Phaser.Physics.Matter.Image {
     super(MainScene.scene.matter.world, x, y, sprite);
     MainScene.scene.add.existing(this);
     MainScene.scene.events.on('game-tick', (...args: any) => {
-      this.gameTick.bind(this, ...args);
+      this.gameTick.apply(this, args);
       this.emit('game-tick', ...args);
     });
     MainScene.scene.events.on('update', (...args: any) => {
-      this.update.bind(this, ...args);
+      this.update.apply(this, args);
       this.emit('update', ...args);
     });
     this.onCreate();
@@ -42,11 +42,11 @@ export abstract class BaseSprite extends Phaser.Physics.Matter.Sprite {
     super(MainScene.scene.matter.world, x, y, sprite);
     MainScene.scene.add.existing(this);
     MainScene.scene.events.on('game-tick', (...args: any) => {
-      this.gameTick.call(this, args);
+      this.gameTick.apply(this, args);
       this.emit('game-tick', ...args);
     });
     MainScene.scene.events.on('update', (...args: any) => {
-      this.update.call(this, args);
+      this.update.apply(this, args);
       this.emit('update', ...args);
     });
     this.onCreate();
