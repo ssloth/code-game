@@ -13,7 +13,7 @@ const data: {
       MAX_POWER: data.max_power,
       MAX_HEALTH: data.max_health,
       MAX_THRUST: data.max_thrust / 1000,
-      MAX_SPEED: data.max_speed,
+      MAX_SPEED: data.max_speed / 100,
       ATTACK_POWER: data.attack_power,
       CONCEALMENT: data.concealment,
       DENSITY: data.density,
@@ -25,7 +25,7 @@ const data: {
   bulletModels: bulletModelData.data
     .map((data) => ({
       NAME: data.name,
-      SPEED: data.speed,
+      SPEED: data.speed / 100,
       ATTACK_POWER: data.attack_power,
       SIZE: { WIDTH: data.size.width, HEIGHT: data.size.height },
       CONCEALMENT: 0,

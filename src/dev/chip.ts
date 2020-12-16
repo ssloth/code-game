@@ -2,7 +2,10 @@ import { IBaseMechChip } from '~src/game/main/mechs/base-mech';
 
 export const baseI: IBaseMechChip = {
   AI: (information, operations) => {
-    operations.forward(0.5);
+    operations.forward(0.1);
+    if (information.world.date > 15 && information.world.date < 21) {
+      operations.rotateLeft();
+    }
   },
 };
 

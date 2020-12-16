@@ -3,7 +3,7 @@
   "data": [
     {
       "name": "B-1",
-      "speed": 10,
+      "speed": 500,
       "size": { "width": 5, "height": 5 },
       "attack_power": 100,
       "image": "/"

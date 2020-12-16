@@ -1,5 +1,4 @@
-import MatterJS from 'matter';
-import { Math } from 'phaser';
+import { Math as PMath } from 'phaser';
 import { Mech } from '~src/base/mech';
 import { Radar } from '~src/base/radar';
 import MainScene from '..';
@@ -46,22 +45,20 @@ export interface ICurrentState {
     rotate: 'left' | 'right' | '';
     attach: 'attach' | '';
   };
-  force: Math.Vector2;
-  velocity: Math.Vector2;
-  position: Math.Vector2;
+  force: PMath.Vector2;
+  velocity: PMath.Vector2;
 }
 
 export class BaseMech extends Mech {
   radar!: Radar;
   prev = {
-    position: new Math.Vector2(this.x, this.y),
+    position: new PMath.Vector2(this.x, this.y),
   };
 
   current: ICurrentState = {
-    position: new Math.Vector2(this.x, this.y),
     state: { move: '', rotate: '', attach: '' },
-    force: new Math.Vector2(0.000001, 0.000001),
-    velocity: new Math.Vector2(0.000001, 0.000001),
+    force: new PMath.Vector2(0.000001, 0.000001),
+    velocity: new PMath.Vector2(this.body.velocity.x, this.body.velocity.y),
   };
 
   do = (name: keyof IOperations) => {
@@ -93,8 +90,6 @@ export class BaseMech extends Mech {
     //   scale: { start: 1.0, end: 0 },
     //   blendMode: 'ADD',
     // }).startFollow(this);
-
-
   }
 
   operations: IOperations = {
@@ -105,14 +100,13 @@ export class BaseMech extends Mech {
       if (!(power < 1)) power = 1;
       this.current.state.move = 'forward';
       this.current.force.setLength(this.model.MAX_THRUST * power);
-      this.setAngle((this.current.force.angle() * 360) / Math.PI2);
     },
 
     back: (power: number = 0.1) => {
       if (this.current.state.move === 'back') return;
       if (!(power < 1)) power = 1;
       this.current.state.move = 'back';
-      this.current.force.setAngle(this.current.force.angle() - Math.PI2 / 2);
+      this.current.force.setAngle(this.current.force.angle() - PMath.PI2 / 2);
       this.current.force.setLength((this.model.MAX_THRUST * power) / 2);
     },
 
@@ -129,7 +123,7 @@ export class BaseMech extends Mech {
       this.current.state.attach = 'attach';
 
       new BaseBullet('plasma', MainScene.scene.gameDataLoader.bulletModels['B-1'], {
-        current: this.current.position,
+        current: this.body.position,
         angle: this.angle,
       });
     },
@@ -158,7 +152,7 @@ export class BaseMech extends Mech {
   };
 
   computeInformation() {
-    const position = new Math.Vector2(this.x, this.y);
+    const position = new PMath.Vector2(this.x, this.y);
     this.current.velocity = this.prev.position.subtract(position);
     this.prev.position = position;
   }
@@ -183,14 +177,22 @@ export class BaseMech extends Mech {
   }
 
   update(): void {
-    this.current.position.set(this.x, this.y);
+    this.current.velocity.set(this.body.velocity.x, this.body.velocity.y);
+
     if (this.current.state.rotate === 'left') {
-      this.setAngularVelocity(0.005);
+      this.setAngularVelocity(0.01);
     } else if (this.current.state.rotate === 'right') {
-      this.setAngularVelocity(-0.005);
+      this.setAngularVelocity(-0.01);
     }
-    console.log('speed', this.body.speed);
-    if (this.current.velocity.length() < this.model.MAX_SPEED) {
+    console.log(this.body.angularVelocity);
+    if (Math.abs(this.body.angularVelocity) > 0.0001) {
+      this.setFrictionAir(0.01);
+    } else {
+      this.setAngularVelocity(0);
+    }
+
+    this.current.force.setAngle(this.body.angle);
+    if (this.body.speed < this.model.MAX_SPEED) {
       this.applyForce(this.current.force);
     }
   }
