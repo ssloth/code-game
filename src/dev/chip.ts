@@ -2,7 +2,7 @@ import { IBaseMechChip } from '~src/game/main/mechs/base-mech';
 
 export const baseI: IBaseMechChip = {
   AI: (information, operations) => {
-    operations.move(200, 200);
+    operations.move(200, 200)
   },
 };
 

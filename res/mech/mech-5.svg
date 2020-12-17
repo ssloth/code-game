@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?> <!-- Created with Vectornator for iOS (http://vectornator.io/) --><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" xmlns:vectornator="http://vectornator.io" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" version="1.1" viewBox="0 0 500 500">
+<metadata>
+<vectornator:setting key="DimensionsVisible" value="1"/>
+<vectornator:setting key="SnapToGrid" value="0"/>
+<vectornator:setting key="SnapToPoints" value="0"/>
+<vectornator:setting key="GuidesVisible" value="1"/>
+<vectornator:setting key="RulersVisible" value="1"/>
+<vectornator:setting key="SnapToEdges" value="0"/>
+<vectornator:setting key="DisplayWhiteBackground" value="0"/>
+<vectornator:setting key="SnapToGuides" value="1"/>
+<vectornator:setting key="GridSpacing" value="36"/>
+<vectornator:setting key="Units" value="Pixels"/>
+<vectornator:setting key="DynamicGuides" value="1"/>
+<vectornator:setting key="New" value="1"/>
+</metadata>
+<defs/>
+<g id="背景" vectornator:layerName="背景" visibility="hidden">
+<path stroke="#000000" stroke-width="1" d="M1025.69+1024L-2.5585+1024L-2.55829-2.55853L1025.69-2.5583L1025.69+1024" fill="#0b151f" stroke-linecap="butt" opacity="1" stroke-linejoin="round"/>
+</g>
+<g id="基本图 1" vectornator:layerName="基本图 1">
+<path stroke="#1a76ed" stroke-width="19.68" d="M25.0508+250C25.0508+125.736+125.764+25+250+25C374.236+25+474.949+125.736+474.949+250C474.949+374.264+374.236+475+250+475C125.764+475+25.0508+374.264+25.0508+250Z" fill="#fef9fc" stroke-linecap="butt" fill-opacity="0.0774908" opacity="1" stroke-linejoin="round"/>
+<path stroke="#1a76ed" stroke-width="19.68" d="M138.677+250C138.677+188.504+188.518+138.652+250+138.652C311.482+138.652+361.323+188.504+361.323+250C361.323+311.496+311.482+361.348+250+361.348C188.518+361.348+138.677+311.496+138.677+250Z" fill="#fef9fc" stroke-linecap="butt" fill-opacity="0.0774908" opacity="1" stroke-linejoin="round"/>
+<path stroke="#1a76ed" stroke-width="19.68" d="M211.903+250C211.903+228.955+228.959+211.894+250+211.894C271.041+211.894+288.097+228.955+288.097+250C288.097+271.045+271.041+288.106+250+288.106C228.959+288.106+211.903+271.045+211.903+250Z" fill="#1a76ed" stroke-linecap="butt" opacity="1" stroke-linejoin="round"/>
+</g>
+</svg>
