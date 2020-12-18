@@ -8,7 +8,7 @@ const start = () => {
   scene.gameCore.addPlayer(computer);
   scene.gameCore.addPlayer(computer);
   const creator = createCreator(scene);
-  creator.createMech('M-1', 0);
+  creator.createMech('M-5', 0);
   // creator.createMech('M-2', 1);
   // creator.createMech('M-3', 2);
 };

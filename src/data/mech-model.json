@@ -43,6 +43,20 @@
       "density": 5,
       "size": { "width": 20, "height": 20 },
       "image": "mech-3"
+    },
+    {
+      "name": "M-5",
+      "max_energy": 0,
+      "max_power": 0,
+      "max_health": 0,
+      "max_speed": 100,
+      "attack_power": 100,
+      "concealment": 100,
+      "friction_air": 0.01,
+      "max_thrust": 1000,
+      "density": 5,
+      "size": { "width": 50, "height": 50 },
+      "image": "mech-5"
     }
   ]
 }

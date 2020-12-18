@@ -25,6 +25,9 @@ export default class MainScene extends Phaser.Scene {
     this.load.image('mech-2', 'res/mech/mech-2.svg');
     this.load.image('mech-3', 'res/mech/mech-3.svg');
     this.load.image('mech-4', 'res/mech/mech-4.svg');
+    this.load.image('mech-5', 'res/mech/mech-5.svg');
+    this.load.image('mech-6', 'res/mech/mech-6.svg');
+    this.load.image('mech-7', 'res/mech/mech-7.svg');
   }
 
   create() {
