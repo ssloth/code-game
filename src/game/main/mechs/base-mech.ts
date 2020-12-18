@@ -1,4 +1,5 @@
 import { Math as PMath } from 'phaser';
+import { AsyncActionQueue, IAsyncAction } from '~src/base/async-action';
 import { Mech } from '~src/base/mech';
 import { Radar } from '~src/base/radar';
 import MainScene from '..';
@@ -6,25 +7,28 @@ import { BaseBullet } from '../bullet/base-bullet';
 
 interface IOperations {
   // 保持现在状态
-  keep: () => void;
+  keep: () => this;
 
   // 向当前方向前进
-  forward: (power?: number) => void;
+  forward: (power?: number) => this;
 
   // 停止
-  stop: () => void;
+  stop: () => this;
 
   // 攻击
-  attach: () => any;
+  attach: () => this;
 
   // 旋转一个游戏时后停止
-  rotateLeft: (a?: number) => void;
+  rotateLeft: (a?: number) => this;
 
   // 旋转一个游戏时后停止
-  rotateRight: (a?: number) => void;
+  rotateRight: (a?: number) => this;
 
   // 移动
-  move: (x: number, y: number) => void;
+  move: (target: { x: number; y: number }) => this;
+
+  // 创建一个操作队列
+  queue: (action: IAsyncAction<keyof IOperations>[]) => this;
 }
 
 export interface ICurrentState {
@@ -49,6 +53,8 @@ export class BaseMech extends Mech {
     position: new PMath.Vector2(this.body.velocity.x, this.body.velocity.y),
   };
 
+  actionQueue = new AsyncActionQueue<keyof IOperations>();
+
   do = (name: keyof IOperations) => {
     this.state;
   };
@@ -58,13 +64,16 @@ export class BaseMech extends Mech {
   }
 
   operations: IOperations = {
-    keep: () => {},
+    keep: () => {
+      return this.operations;
+    },
 
     forward: (power: number = 0.1) => {
       this.current.state.stop = false;
       this.current.state.forward = power;
       this.current.state.move = undefined;
       this.current.force.setLength(this.model.MAX_THRUST * power);
+      return this.operations;
     },
 
     stop: () => {
@@ -73,29 +82,38 @@ export class BaseMech extends Mech {
       this.current.state.move = undefined;
       this.setFrictionAir(0.01);
       this.current.force.setLength(0);
+      return this.operations;
     },
 
-    attach: async () => {
+    attach: () => {
       this.current.state.attach = 'attach';
       new BaseBullet('plasma', MainScene.scene.gameDataLoader.bulletModels['B-1'], {
         current: this.body.position,
         angle: this.angle,
       });
+      return this.operations;
     },
 
     rotateLeft: () => {
       this.current.state.rotate = 'left';
+      return this.operations;
     },
 
     rotateRight: () => {
       this.current.state.rotate = 'right';
+      return this.operations;
     },
 
-    move: (x, y) => {
+    move: ({ x, y }) => {
       if (typeof x !== 'number' || typeof y !== 'number' || this.current.state.move !== undefined)
-        return;
+        return this.operations;
       this.current.state.moveState = 'ready';
       this.current.state.move = new PMath.Vector2(x, y);
+      return this.operations;
+    },
+
+    queue: (action: any[]) => {
+      return this.operations;
     },
   };
 
@@ -109,7 +127,7 @@ export class BaseMech extends Mech {
           date: date,
         },
         self: {
-          position: { x: this.x, y: this.y },
+          position: { x: this.current.position.x, y: this.current.position.y },
           velocity: this.body.speed,
           angle: this.body.angle,
         },
@@ -121,7 +139,7 @@ export class BaseMech extends Mech {
   }
 
   update(): any {
-    this.current.position.set(this.x, this.x);
+    this.current.position.set(this.body.position.x, this.body.position.y);
     if (this.current.state.move) {
       if (this.current.state.moveState === 'ready') {
         if (this.body.speed !== 0) return this.setFrictionAir(0.05);
@@ -145,7 +163,6 @@ export class BaseMech extends Mech {
         if (d >= this.model.MAX_SPEED * 2) {
           this.applyForce(this.current.force);
         } else {
-          this.setPosition(this.current.state.move.x, this.current.state.move.y);
           this.current.state.moveState = 'stop';
           this.current.force.setLength(0);
         }
@@ -153,6 +170,7 @@ export class BaseMech extends Mech {
 
       if (this.current.state.moveState === 'stop') {
         if (this.body.speed !== 0) return this.setFrictionAir(0.05);
+        this.setPosition(this.current.state.move.x, this.current.state.move.y);
         this.setFrictionAir(0);
         this.current.state.moveState = undefined;
         this.current.state.move = undefined;
