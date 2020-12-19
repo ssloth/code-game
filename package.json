@@ -12,7 +12,8 @@
     "babel-polyfill": "^6.26.0",
     "lodash": "^4.17.20",
     "matter": "^0.2.0",
-    "phaser": "^3.24.1"
+    "phaser": "^3.24.1",
+    "xstate": "^4.15.1"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.165",

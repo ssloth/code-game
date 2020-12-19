@@ -12,7 +12,7 @@
       "concealment": 100,
       "friction_air": 0,
       "max_thrust": 500,
-      "density": 5,
+      "density": 50,
       "size": { "width": 20, "height": 20 },
       "image": "mech-1"
     },
