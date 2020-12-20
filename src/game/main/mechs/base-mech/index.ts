@@ -2,16 +2,16 @@ import { Math as PMath } from 'phaser';
 import { AsyncActionQueue, IAsyncAction } from '~src/base/async-action';
 import { Mech } from '~src/base/mech';
 import { Radar } from '~src/base/radar';
-import { createMachine } from 'xstate'
+import { createMachine } from 'xstate';
 import MainScene from '../../';
 import { BaseBullet } from '../../bullet/base-bullet';
 import { ActionStateMachine } from '~src/base/action-state-machine';
-import { fsm } from './fsm';
+import { createFSM } from './fsm';
 
-createMachine({ 
-  initial: "",
-  states: {}
-})
+createMachine({
+  initial: '',
+  states: {},
+});
 
 interface IOperations {
   // 保持现在状态
@@ -62,7 +62,7 @@ export class BaseMech extends Mech {
     position: new PMath.Vector2(this.body.velocity.x, this.body.velocity.y),
   };
 
-  fsm = new ActionStateMachine(this, fsm as any);
+  fsm = new ActionStateMachine(createFSM(this) as any);
 
   actionQueue = new AsyncActionQueue<keyof IOperations>();
 
@@ -151,15 +151,13 @@ export class BaseMech extends Mech {
   }
 
   gameTick(date: number) {
-    this.current.state.rotate = '';
-    console.log('tick')
     this.chip.AI(this.computeInformation(date), this.fsm);
   }
 
   update(): any {
     this.current.position.set(this.body.position.x, this.body.position.y);
-    this.fsm.update();
-
+    return this.fsm.update();
+    /**
     if (this.current.state.move) {
       if (this.current.state.moveState === 'ready') {
         if (this.body.speed !== 0) return this.setFrictionAir(0.05);
@@ -215,6 +213,8 @@ export class BaseMech extends Mech {
     if (this.body.speed < this.model.MAX_SPEED) {
       this.applyForce(this.current.force);
     }
+
+ */
   }
 
   onCollide() {
