@@ -2,10 +2,10 @@ import { IBaseMechChip } from '~src/game/main/mechs/base-mech/index';
 
 export const baseI: IBaseMechChip = {
   AI: (information, operations) => {
-    if (information.world.date > 2 && information.world.date < 20) {
+    if (information.world.date > 2 && information.world.date < 100) {
       operations.tigger('move', 'forward', 0.5);
     }
-    if (information.world.date > 10 && information.world.date < 15) {
+    if (information.world.date > 5 && information.world.date < 10) {
       operations.tigger('rotate', 'rotateRight');
     } else {
       operations.tigger('rotate', 'noop');

@@ -35,8 +35,9 @@ export default class MainScene extends Phaser.Scene {
     this.gameCore.init();
     this.add.image(0, 0, 'backdrop').setScale(10, 2).setOrigin(0);
     this.add.tileSprite(0, 0, 4000, 2000, 'grid');
+    this.matter.world.setBounds(1, 1);
     this.cameras.main.setBounds(0, 0, 0, 0);
-    this.cameras.main.setZoom(0.5);
+    this.cameras.main.setZoom(1);
     this.cameras.main.centerOn(0, 0);
 
     this.matter.world.on('collisionstart', (_: any, a: any, b: any) => {

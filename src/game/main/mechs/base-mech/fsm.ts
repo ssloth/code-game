@@ -50,6 +50,7 @@ export const createFSM = (mech: BaseMech) => {
       rotateRight: {
         update() {
           mech.setAngularVelocity(Math.PI / 720);
+          mech.thrustRight(mech.model.MAX_THRUST);
         },
         end() {
           mech.setAngularVelocity(0);
@@ -80,16 +81,8 @@ export const createFSM = (mech: BaseMech) => {
       $init: 'run',
       run: {
         update() {
-          mech.current.force.setAngle(mech.body.angle);
           if (mech.body.speed < mech.model.MAX_SPEED) {
-            mech.applyForce(mech.current.force);
-          }
-          const velocity = new PMath.Vector2(mech.body.velocity.x, mech.body.velocity.y);
-          if (Math.abs(velocity.angle() - mech.body.angle) > AP_ZERO) {
-            // 增加摩擦力 修正飞行器朝向
-            mech.setFrictionAir(0.01);
-          } else {
-            mech.setFrictionAir(0);
+            mech.thrust(mech.model.MAX_THRUST * 2);
           }
         },
       },
