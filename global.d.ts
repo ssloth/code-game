@@ -1,2 +1,2 @@
 declare var ZERO: number;
-eval('ZERO = 0.000001;');
+declare var AP_ZERO: number

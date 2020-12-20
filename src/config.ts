@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import scenes from './game';
 
 window.ZERO = 0.000001;
+window.AP_ZERO = 0.001;
 
 const width = window.innerWidth;
 const height = window.innerHeight;
