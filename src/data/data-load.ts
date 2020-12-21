@@ -16,7 +16,7 @@ const data: {
       MAX_SPEED: data.max_speed / 100,
       ATTACK_POWER: data.attack_power,
       CONCEALMENT: data.concealment,
-      DENSITY: data.density,
+      MASS: data.mass,
       FRICTION_AIR: data.friction_air,
       SIZE: { WIDTH: data.size.width, HEIGHT: data.size.height },
     }))
@@ -29,7 +29,7 @@ const data: {
       ATTACK_POWER: data.attack_power,
       SIZE: { WIDTH: data.size.width, HEIGHT: data.size.height },
       CONCEALMENT: 0,
-      DENSITY: 1,
+      MASS: 1,
       FRICTION_AIR: 0,
     }))
     .reduce((acc, val) => ({ ...acc, [val.NAME]: val }), {}),

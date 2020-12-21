@@ -43,7 +43,7 @@ export class ActionStateMachine {
   }
 
   // 切换当前状态
-  public tigger(parallelName: string, stateName: string, args?: any) {
+  public trigger(parallelName: string, stateName: string, args?: any) {
     if (
       (this.config[parallelName].$current === stateName &&
         _.isEqual(this.config[parallelName].$params, args)) ||

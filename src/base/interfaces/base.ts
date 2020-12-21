@@ -5,10 +5,8 @@ export interface IBase {
   readonly CONCEALMENT: number;
   // 大小
   readonly SIZE: { WIDTH: number; HEIGHT: number };
-  // 密度
-  readonly DENSITY: number;
-  // 阻力
-  readonly FRICTION_AIR: number;
+  // 重量
+  readonly MASS: number;
 }
 
 // 可以被攻击的单位

@@ -17,9 +17,8 @@ export abstract class Mech extends BaseSprite implements IMech {
       health: this.model.MAX_HEALTH,
       status: [],
     };
-    this.setSleepThreshold(1);
-    this.setDensity(this.model.DENSITY);
-    this.setFrictionAir(this.model.FRICTION_AIR);
+    this.setFrictionAir(0);
+    this.setMass(model.MASS);
     this.setSensor(true);
   }
 }
