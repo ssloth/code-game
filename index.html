@@ -9,10 +9,33 @@
         margin: 0;
         padding: 0;
       }
+      body {
+        overflow: hidden;
+      }
+      #game-scene {
+        position: fixed;
+        display: grid;
+        grid-template-columns: 10% 80% 10%;
+        grid-template-rows: 10% 80% 10%;
+        width: 100vw;
+        height: 100vh;
+        z-index: 100;
+      }
     </style>
   </head>
   <body>
-    <div id="game-sence"></div>
+    <div id="game-scene">
+      <div id="LT"></div>
+      <div id="T"></div>
+      <div id="RT"></div>
+      <div id="L"></div>
+      <div id="C"></div>
+      <div id="R"></div>
+      <div id="LB"></div>
+      <div id="B"></div>
+      <div id="RB"></div>
+      <div></div>
+    </div>
     <script src="./src/main.ts"></script>
   </body>
 </html>

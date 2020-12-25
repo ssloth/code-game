@@ -50,14 +50,13 @@ export const createFSM = (mech: BaseMech) => {
       rotateRight: {
         update() {
           mech.setAngularVelocity(Math.PI / 720);
-          mech.thrustRight(mech.model.MAX_THRUST);
         },
         end() {
           mech.setAngularVelocity(0);
         },
       },
       // 左转到
-      rotateLefeToThen: {},
+      rotateLeftToThen: {},
       // 右转到
       rotateRightToThen: {},
       // 最短到距离转到
