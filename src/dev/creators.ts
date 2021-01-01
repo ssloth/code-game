@@ -7,6 +7,6 @@ const base = [baseI, baseII, baseIII];
 export default (scene: Scene) => {
   return {
     createMech: (m: string, bi: 0 | 1 | 2 | 3 | 4 | 5 | 6 = 0) =>
-      new BaseMech({ sprite: 'mech-1', x: 100, y: 100 }, data.mechModels[m], base[bi]),
+      new BaseMech({ sprite: 'mech-1', x: 0, y: 0 }, data.mechModels[m], base[bi]),
   };
 };

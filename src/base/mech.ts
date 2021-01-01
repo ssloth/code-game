@@ -1,6 +1,6 @@
 import { BlendModes } from 'phaser';
 import { BaseSprite } from './base';
-import { IActionSequence, IChip, IMech, IMechModel, IMechState } from './interfaces/mech';
+import { IChip, IMech, IMechModel, IMechState } from './interfaces/mech';
 
 export abstract class Mech extends BaseSprite implements IMech {
   _state: IMechState;
@@ -19,6 +19,5 @@ export abstract class Mech extends BaseSprite implements IMech {
     };
     this.setFrictionAir(0);
     this.setMass(model.MASS);
-    this.setSensor(true);
   }
 }

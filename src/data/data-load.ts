@@ -1,10 +1,14 @@
 import { IBulletModel } from '~src/base/interfaces/bullet';
 import { IMechModel } from '~src/base/interfaces/mech';
+import { IGameMap } from '~src/base/interfaces/game-map';
 import mechModelData from './mech-model.json';
 import bulletModelData from './bullet-model.json';
+import gameMapData from './game-map.json';
+
 const data: {
   mechModels: { [key: string]: IMechModel };
   bulletModels: { [key: string]: IBulletModel };
+  gameMaps: { [key: string]: IGameMap };
 } = {
   mechModels: mechModelData.data
     .map((data: any) => ({
@@ -31,6 +35,13 @@ const data: {
       CONCEALMENT: 0,
       MASS: 1,
       FRICTION_AIR: 0,
+    }))
+    .reduce((acc, val) => ({ ...acc, [val.NAME]: val }), {}),
+
+  gameMaps: gameMapData.data
+    .map((item) => ({
+      NAME: item.name,
+      SIZE: item.size,
     }))
     .reduce((acc, val) => ({ ...acc, [val.NAME]: val }), {}),
 };
