@@ -1,3 +1,4 @@
+import { IGameMap } from '~src/base/interfaces/game-map';
 import { GameDate } from '~src/base/interfaces/information';
 import { Faction, Player } from '~src/base/player';
 import MainScene from '.';

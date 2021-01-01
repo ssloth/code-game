@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { GameCore } from './game-core';
 import data from '~src/data/data-load';
 export default class MainScene extends Phaser.Scene {
+  static scene: MainScene;
   public gameCore!: GameCore;
   private tc = 0;
   private gameDate = 0;
@@ -11,8 +12,9 @@ export default class MainScene extends Phaser.Scene {
     x: 0,
     y: 0,
   };
-  static scene: MainScene;
   gameDataLoader = data;
+  gameMap = data.gameMaps['base'];
+
   constructor() {
     super('main-scene');
     MainScene.scene = this;
@@ -39,31 +41,53 @@ export default class MainScene extends Phaser.Scene {
   create() {
     this.gameCore = new GameCore();
     this.gameCore.init();
-    this.add.image(0, 0, 'backdrop').setScale(10, 2).setOrigin(0);
-    this.add.tileSprite(0, 0, 4000, 2000, 'grid');
+    this.add.image(0, 0, 'backdrop').setScale(10, 5);
+    this.add.tileSprite(0, 0, 3600, 3600, 'grid');
     this.cameras.main.setZoom(1);
-    this.cameras.main.centerOn(0, 0);
+    this.matter.world.setBounds(
+      -this.gameMap.SIZE,
+      -this.gameMap.SIZE,
+      this.gameMap.SIZE * 2,
+      this.gameMap.SIZE * 2,
+      1,
+    );
+    this.cameras.main.setBounds(
+      -this.gameMap.SIZE,
+      -this.gameMap.SIZE,
+      this.gameMap.SIZE * 2,
+      this.gameMap.SIZE * 2,
+    );
 
     document.body.addEventListener(
       'mousewheel',
       (e) => {
         if ((e as WheelEvent).deltaY < 0) {
-          this.cameras.main.setZoom(this.cameras.main.zoom + 0.05);
+          const s = this.cameras.main.zoom + 0.05;
+          this.cameras.main.setZoom(s > 2 ? 2 : s);
         } else {
-          this.cameras.main.setZoom(this.cameras.main.zoom - 0.05);
+          const s = this.cameras.main.zoom - 0.05;
+          this.cameras.main.setZoom(s < 0.5 ? 0.5 : s);
         }
       },
       { passive: true },
     );
 
-    document.getElementById('L')?.addEventListener('mouseenter', () => (this.camerasXY.x += -10));
-    document.getElementById('R')?.addEventListener('mouseenter', () => (this.camerasXY.x += 10));
-    document.getElementById('T')?.addEventListener('mouseenter', () => (this.camerasXY.y += -10));
-    document.getElementById('B')?.addEventListener('mouseenter', () => (this.camerasXY.y += 10));
-    document.getElementById('L')?.addEventListener('mouseleave', () => (this.camerasXY.x = 0));
-    document.getElementById('R')?.addEventListener('mouseleave', () => (this.camerasXY.x = 0));
-    document.getElementById('T')?.addEventListener('mouseleave', () => (this.camerasXY.y = 0));
-    document.getElementById('N')?.addEventListener('mouseleave', () => (this.camerasXY.y = 0));
+    document.body.addEventListener('mousemove', (e) => {
+      if (e.x < 100) {
+        this.camerasXY.x = -10;
+      } else if (e.x > window.innerWidth - 100) {
+        this.camerasXY.x = 10;
+      } else {
+        this.camerasXY.x = 0;
+      }
+      if (e.y < 100) {
+        this.camerasXY.y = -10;
+      } else if (e.y > window.innerHeight - 100) {
+        this.camerasXY.y = 10;
+      } else {
+        this.camerasXY.y = 0;
+      }
+    });
 
     this.matter.world.on('collisionstart', (_: any, a: any, b: any) => {
       if (typeof a.gameObject?.onCollide === 'function') a.gameObject.onCollide(b.gameObject);
@@ -90,8 +114,14 @@ export default class MainScene extends Phaser.Scene {
   }
 
   private updateCameras() {
-    this.camerasXY.cx += this.camerasXY.x;
-    this.camerasXY.cy += this.camerasXY.y;
+    const cx = this.camerasXY.cx + this.camerasXY.x;
+    const cy = this.camerasXY.cy + this.camerasXY.y;
+    if (Math.abs(cx) < this.gameMap.SIZE) {
+      this.camerasXY.cx = cx;
+    }
+    if (Math.abs(cy) < this.gameMap.SIZE) {
+      this.camerasXY.cy = cy;
+    }
     this.camerasTranslate();
   }
 

@@ -11,20 +11,15 @@ export const createFSM = (mech: BaseMech) => {
       $params: '',
       // 前进
       forward: {
-        start(params) {
-          mech.current.force.setLength(mech.model.MAX_THRUST * params);
-        },
-        end() {
-          mech.current.force.setLength(ZERO);
-        },
+        start(params) {},
+        update() {},
+        end() {},
       },
       // 前进到
       forwardToThen: {},
       // 刹车
       brake: {
-        start() {
-          mech.current.force.setLength(ZERO);
-        },
+        start() {},
         update() {
           mech.setFrictionAir(0.01);
         },
@@ -79,11 +74,7 @@ export const createFSM = (mech: BaseMech) => {
     normal: {
       $init: 'run',
       run: {
-        update() {
-          if (mech.body.speed < mech.model.MAX_SPEED) {
-            mech.thrust(mech.model.MAX_THRUST * 2);
-          }
-        },
+        update() {},
       },
     },
   };

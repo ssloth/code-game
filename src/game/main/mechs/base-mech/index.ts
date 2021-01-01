@@ -1,33 +1,9 @@
-import { Math as PMath } from 'phaser';
 import { Mech } from '~src/base/mech';
 import { Radar } from '~src/base/radar';
-import MainScene from '../../';
-import { BaseBullet } from '../../bullet/base-bullet';
 import { ActionStateMachine } from '~src/base/action-state-machine';
 import { createFSM } from './fsm';
-
-export interface ICurrentState {
-  state: {
-    forward: number;
-    stop: boolean;
-    rotate: 'left' | 'right' | '';
-    attach: 'attach' | '';
-    move?: PMath.Vector2;
-    moveState?: 'ready' | 'rotate' | 'forward' | 'stop';
-    promise?: { resolve: (v: any) => any; reject: (v: any) => any };
-  };
-  force: PMath.Vector2;
-  position: PMath.Vector2;
-}
-
 export class BaseMech extends Mech {
   radar!: Radar;
-
-  current: ICurrentState = {
-    state: { forward: 0, stop: false, rotate: '', attach: '', move: undefined },
-    force: new PMath.Vector2(ZERO, ZERO),
-    position: new PMath.Vector2(this.body.velocity.x, this.body.velocity.y),
-  };
 
   fsm = new ActionStateMachine(createFSM(this) as any);
 
@@ -41,7 +17,7 @@ export class BaseMech extends Mech {
         date: date,
       },
       self: {
-        position: { x: this.current.position.x, y: this.current.position.y },
+        position: this.body.position,
         speed: this.body.speed,
         angle: this.body.angle,
       },
@@ -55,7 +31,6 @@ export class BaseMech extends Mech {
   }
 
   update(): any {
-    this.current.position.set(this.body.position.x, this.body.position.y);
     return this.fsm.update();
   }
 
