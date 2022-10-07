@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import _ from 'lodash';
-import scenes from './game';
+import scenes from './scenes';
 
 export const createConfig = (config: Partial<Phaser.Types.Core.GameConfig>) => {
   const baseConfig: Partial<Phaser.Types.Core.GameConfig> = {
