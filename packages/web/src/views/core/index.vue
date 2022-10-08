@@ -1,13 +1,3 @@
-<script setup lang="ts">
-import { onMounted } from 'vue';
-import initGame from './core';
-
-onMounted(() => {
-  initGame();
-})
-
-</script>
-
 <template>
   <div id="code-war">
     <div class="top"></div>

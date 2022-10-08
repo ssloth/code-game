@@ -1,5 +1,5 @@
 <template lang="">
-  <div class="debug-page">
+  <div class="design-page">
     
   </div>
 </template>
@@ -11,9 +11,9 @@ export default {
 </script>
 
 <style lang="scss">
-  .debug-page {
+  .design-page {
     width: 100vw;
     height: 100vh;
-    background: #f73;
+    background: #324;
   }
 </style>
