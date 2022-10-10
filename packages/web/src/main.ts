@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
 
 import App from './app.vue'
-import Core from './views/core/index.vue';
+import MapEditor from './views/map-editor/index.vue';
 import Debnug from './views/debug/index.vue';
 import Design from './views/design/index.vue';
 
@@ -10,7 +10,7 @@ import Design from './views/design/index.vue';
 import './style.css'
 
 const routes = [
-  { path: '/core', component: Core },
+  { path: '/map-editor', component: MapEditor },
   { path: '/debug', component: Debnug },
   { path: '/design', component: Design },
 ]

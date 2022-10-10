@@ -1,3 +1,6 @@
+import { ofCamerasDrag } from "../../events";
+import { mouseState, mousewheel$ } from "../../events/document";
+
 export default class MainScene extends Phaser.Scene {
   preload() {
     this.load.setBaseURL('http://localhost:5173');
@@ -15,8 +18,24 @@ export default class MainScene extends Phaser.Scene {
   }
 
   create() {
-    this.add.image(0, 0, 'backdrop').setScale(10, 5);
-    this.add.tileSprite(0, 0, 3600, 3600, 'grid');
+    this.add.tileSprite(0, 0, 5000, 3000, 'grid');
     this.cameras.main.setZoom(1);
+
+    mousewheel$.subscribe(e => {
+
+      if (e.deltaY < 0) {
+        const s = this.cameras.main.zoom + 0.05;
+        this.cameras.main.setZoom(s > 2 ? 2 : s);
+      } else {
+        const s = this.cameras.main.zoom - 0.05;
+        this.cameras.main.setZoom(s < 0.5 ? 0.5 : s);
+        this.cameras.main
+      }
+    })
+
+    ofCamerasDrag(this.cameras.main).subscribe(e => {
+      this.cameras.main.x = e.x;
+      this.cameras.main.y = e.y;
+    })
   }
 }

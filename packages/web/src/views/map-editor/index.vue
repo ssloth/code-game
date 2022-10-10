@@ -1,11 +1,9 @@
 <template>
-  <div id="code-war">
+  <div id="map-editor">
     <div class="top"></div>
     <div class="content">
       <div class="side-left"></div>
-      <div class="canvas-container">
-        <div id="game-canvas"></div>
-      </div>
+      <div class="empty"></div>
       <div class="side-right"></div>
     </div>
     <div class="editor-indicator"></div>
@@ -13,7 +11,7 @@
 </template>
 
 <style lang="scss">
-#code-war {
+#map-editor {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -25,7 +23,8 @@
   .top {
     width: 100%;
     height: 30px;
-    background: #666;
+    background: #222;
+    opacity: 0.3;
   }
 
   .content {
@@ -33,35 +32,27 @@
     position: relative;
     flex: 1;
     width: 100%;
-    background: #888;
 
     .side-left {
       width: 200px;
       height: 100%;
-      background: #777;
+      background: #333;
+      opacity: 0.3;
+
     }
 
-    .canvas-container {
+    .empty {
       display: flex;
       flex: 1;
       height: 100%;
-
-      #game-canvas {
-        margin: auto;
-        width: 800px;
-        height: 800px;
-        background: #aaa;
-
-        canvas {
-          background: #ccc;
-        }
-      }
     }
 
     .side-right {
       width: 300px;
       height: 100%;
-      background: #777;
+      background: #333;
+      opacity: 0.3;
+
     }
   }
 
@@ -72,6 +63,8 @@
     width: 100%;
     height: 20px;
     background: #555;
+    opacity: 0.5;
+
   }
 }
 </style>
