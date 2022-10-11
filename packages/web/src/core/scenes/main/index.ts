@@ -1,7 +1,10 @@
 import { ofCamerasDrag } from "../../events";
-import { mouseState, mousewheel$ } from "../../events/document";
+import { mousewheel$ } from "../../events/document";
 
 export default class MainScene extends Phaser.Scene {
+
+  controls?: Phaser.Cameras.Controls.SmoothedKeyControl;
+
   preload() {
     this.load.setBaseURL('http://localhost:5173');
     this.load.atlas('space', 'res/space/space.png', 'res/space/space.json');
@@ -20,9 +23,10 @@ export default class MainScene extends Phaser.Scene {
   create() {
     this.add.tileSprite(0, 0, 5000, 3000, 'grid');
     this.cameras.main.setZoom(1);
+    this.matter.add.circle(500, 500, 100, { frictionAir: 1 });
+    this.matter.add.mouseSpring()
 
     mousewheel$.subscribe(e => {
-
       if (e.deltaY < 0) {
         const s = this.cameras.main.zoom + 0.05;
         this.cameras.main.setZoom(s > 2 ? 2 : s);
@@ -37,5 +41,9 @@ export default class MainScene extends Phaser.Scene {
       this.cameras.main.x = e.x;
       this.cameras.main.y = e.y;
     })
+  }
+
+  update(time: number) {
+
   }
 }
